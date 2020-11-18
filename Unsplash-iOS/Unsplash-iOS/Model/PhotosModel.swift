@@ -22,10 +22,10 @@ struct Photo: Codable {
     let altDescription: String?
     let urls: Urls
     let links: Links
-//    let categories: [String]?
+    let categories: [String]?
     let likes: Int
     let likedByUser: Bool
-//    let currentUserCollections: [String]?
+    let currentUserCollections: [CurrentUserCollections]?
     let sponsorship: String?
     let user: User
     let exif: Exif
@@ -44,10 +44,10 @@ struct Photo: Codable {
         case altDescription = "alt_description"
         case urls
         case links
-//        case categories
+        case categories
         case likes
         case likedByUser = "liked_by_user"
-//        case currentUserCollections = "current_user_collections"
+        case currentUserCollections = "current_user_collections"
         case sponsorship, user, exif, location
         case views, downloads
     }
@@ -72,6 +72,26 @@ struct Photo: Codable {
             case linksSelf = "self"
             case html, download
             case downloadLocation = "download_location"
+        }
+    }
+    
+    // MARK: - CurrentUserCollections
+    struct CurrentUserCollections: Codable {
+        let id: Int
+        let title: String
+        let publishedAt: String?
+        let lastCollectedAt: String?
+        let updatedAt: String?
+        let coverPhoto: String?
+        let user: String?
+
+        enum CodingKeys: String, CodingKey {
+            case id, title
+            case publishedAt = "published_at"
+            case lastCollectedAt = "last_collected_at"
+            case updatedAt = "updated_at"
+            case coverPhoto = "cover_photo"
+            case user
         }
     }
     
