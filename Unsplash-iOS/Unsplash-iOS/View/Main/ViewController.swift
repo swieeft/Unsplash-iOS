@@ -37,6 +37,18 @@ class ViewController: UIViewController {
         searchView.layer.masksToBounds = true
         searchView.backgroundColor = UIColor.lightGray.withAlphaComponent(0)
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        let apiManager = APIManager()
+        apiManager.header { data in
+            print(data?.count ?? 0)
+        } failure: { message in
+            print(message)
+        }
+
+    }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
