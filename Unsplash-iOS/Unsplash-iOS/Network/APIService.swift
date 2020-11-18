@@ -7,32 +7,54 @@
 
 import Foundation
 
-class APIHeader {
-    static let shared = APIHeader()
- 
-    var authorization: String {
-        return authorizationKey()
+enum APIHeader {
+    case authorization
+    case contentType
+    
+    var key: String {
+        switch self {
+        case .authorization:
+            return "Authorization"
+        case .contentType:
+            return "Content-Type"
+        }
     }
     
-    private init() {}
-    
-    private func authorizationKey() -> String {
-        guard let path = Bundle.main.path(forResource: "unsplash", ofType: "plist"),
-              let dict = NSDictionary(contentsOfFile: path),
-              let key = dict["unsplash"] as? String else {
-            return ""
-        }
+    var value: String {
+        switch self {
+        case .authorization:
+            guard let path = Bundle.main.path(forResource: "unsplash", ofType: "plist"),
+                  let dict = NSDictionary(contentsOfFile: path),
+                  let key = dict["unsplash"] as? String else {
+                return ""
+            }
 
-        return "Client-ID \(key)"
+            return "Client-ID \(key)"
+        case .contentType:
+            return "application/json"
+        }
+    }
+    
+    static func get(_ headers: APIHeader...) -> [String: String]? {
+        if headers.count == 0 {
+            return nil
+        }
+        
+        var header: [String: String] = [:]
+        
+        headers.forEach { h in
+            header[h.key] = h.value
+        }
+        
+        return header
     }
 }
 
 enum APIMethod: String {
-//    case get = "GET"
-//    case post = "POST"
-//    case put = "PUT"
-//    case delete = "DELETE"
     case get
+    case post
+    case put
+    case delete
 }
 
 enum APIService {
@@ -75,8 +97,7 @@ extension APIService {
     var headers: [String : String]? {
         switch self {
         case .header:
-            return ["Authorization": APIHeader.shared.authorization,
-                    "Content-Type": "application/json"]
+            return APIHeader.get(.authorization, .contentType)
         }
     }
 }
