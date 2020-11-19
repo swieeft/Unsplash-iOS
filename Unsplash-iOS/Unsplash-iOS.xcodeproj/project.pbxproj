@@ -17,6 +17,11 @@
 		B514127E25663981005205D0 /* APIEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514127D25663981005205D0 /* APIEnums.swift */; };
 		B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5141288256639CD005205D0 /* ResponseSuccessModel.swift */; };
 		B5389518256656E100B68A41 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5389517256656E100B68A41 /* UIImageExtension.swift */; };
+		B5389527256661D800B68A41 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5389526256661D800B68A41 /* ImageDetailViewController.swift */; };
+		B538952F256661DF00B68A41 /* ImageDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B538952E256661DF00B68A41 /* ImageDetailViewController.storyboard */; };
+		B53895362566636600B68A41 /* ImageDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53895342566636600B68A41 /* ImageDetailCollectionViewCell.swift */; };
+		B53895372566636600B68A41 /* ImageDetailCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B53895352566636600B68A41 /* ImageDetailCollectionViewCell.xib */; };
+		B538953F2566B01700B68A41 /* PanDirectionGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538953E2566B01700B68A41 /* PanDirectionGestureRecognizer.swift */; };
 		B58CB62F2564A46500341A80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB62E2564A46500341A80 /* AppDelegate.swift */; };
 		B58CB6332564A46500341A80 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB6322564A46500341A80 /* ViewController.swift */; };
 		B58CB6362564A46500341A80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B58CB6342564A46500341A80 /* Main.storyboard */; };
@@ -60,6 +65,11 @@
 		B514127D25663981005205D0 /* APIEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnums.swift; sourceTree = "<group>"; };
 		B5141288256639CD005205D0 /* ResponseSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSuccessModel.swift; sourceTree = "<group>"; };
 		B5389517256656E100B68A41 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
+		B5389526256661D800B68A41 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
+		B538952E256661DF00B68A41 /* ImageDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageDetailViewController.storyboard; sourceTree = "<group>"; };
+		B53895342566636600B68A41 /* ImageDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailCollectionViewCell.swift; sourceTree = "<group>"; };
+		B53895352566636600B68A41 /* ImageDetailCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageDetailCollectionViewCell.xib; sourceTree = "<group>"; };
+		B538953E2566B01700B68A41 /* PanDirectionGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanDirectionGestureRecognizer.swift; sourceTree = "<group>"; };
 		B58CB62B2564A46500341A80 /* Unsplash-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unsplash-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58CB62E2564A46500341A80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B58CB6322564A46500341A80 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -130,8 +140,28 @@
 			children = (
 				B514126B256631BC005205D0 /* ImageLoadOperation.swift */,
 				B51412742566384A005205D0 /* ImageCache.swift */,
+				B538953E2566B01700B68A41 /* PanDirectionGestureRecognizer.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		B538951C25665BB900B68A41 /* ImageDetail */ = {
+			isa = PBXGroup;
+			children = (
+				B53895332566634800B68A41 /* Cells */,
+				B5389526256661D800B68A41 /* ImageDetailViewController.swift */,
+				B538952E256661DF00B68A41 /* ImageDetailViewController.storyboard */,
+			);
+			path = ImageDetail;
+			sourceTree = "<group>";
+		};
+		B53895332566634800B68A41 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B53895342566636600B68A41 /* ImageDetailCollectionViewCell.swift */,
+				B53895352566636600B68A41 /* ImageDetailCollectionViewCell.xib */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		B58CB6222564A46500341A80 = {
@@ -204,6 +234,7 @@
 		B5A34AA725650A8D006B5A08 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B538951C25665BB900B68A41 /* ImageDetail */,
 				B5A34ACD256510B2006B5A08 /* Main */,
 			);
 			path = View;
@@ -342,8 +373,10 @@
 			files = (
 				B514124825660657005205D0 /* ImageTableViewCell.xib in Resources */,
 				B58CB63B2564A46700341A80 /* LaunchScreen.storyboard in Resources */,
+				B53895372566636600B68A41 /* ImageDetailCollectionViewCell.xib in Resources */,
 				B58CB6382564A46700341A80 /* Assets.xcassets in Resources */,
 				B5A34AA225650725006B5A08 /* unsplash.plist in Resources */,
+				B538952F256661DF00B68A41 /* ImageDetailViewController.storyboard in Resources */,
 				B58CB6362564A46500341A80 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -370,6 +403,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B58CB6332564A46500341A80 /* ViewController.swift in Sources */,
+				B538953F2566B01700B68A41 /* PanDirectionGestureRecognizer.swift in Sources */,
+				B53895362566636600B68A41 /* ImageDetailCollectionViewCell.swift in Sources */,
 				B514127E25663981005205D0 /* APIEnums.swift in Sources */,
 				B51412752566384A005205D0 /* ImageCache.swift in Sources */,
 				B514124725660657005205D0 /* ImageTableViewCell.swift in Sources */,
@@ -383,6 +418,7 @@
 				B514126325662A9C005205D0 /* UIColorExtension.swift in Sources */,
 				B5A34AAA25650AC9006B5A08 /* UnsplashPlistModel.swift in Sources */,
 				B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */,
+				B5389527256661D800B68A41 /* ImageDetailViewController.swift in Sources */,
 				B5CF50DC25651E7300026AB9 /* APIManager.swift in Sources */,
 				B5389518256656E100B68A41 /* UIImageExtension.swift in Sources */,
 			);

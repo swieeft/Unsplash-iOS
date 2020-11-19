@@ -100,6 +100,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         PhotosController.shared.cancelDownloadImage(index: indexPath.row)
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: "ImageDetailViewController", bundle: nil)
+        guard let vc = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as? ImageDetailViewController else {
+            return
+        }
+        
+        vc.delegate = self
+        vc.currentIndex = indexPath.row
+        
+        self.present(vc, animated: true) {
+//            let height = PhotosController.shared.imageHeight(index: indexPath.row)
+//            
+//            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+//            self.tableView.contentOffset.y += self.headerViewMaxHeight + UIApplication.shared.statusBarFrame.height - (UIScreen.main.bounds.height / 2) + (height / 2)
+        }
+    }
 }
 
 extension ViewController: UITableViewDataSourcePrefetching {
@@ -152,5 +169,14 @@ extension ViewController: UIScrollViewDelegate {
                 self?.showAlert(message: error)
             }
         }
+    }
+}
+
+extension ViewController: ImageDetailViewControllerDelegate {
+    func changeImage(index: Int) {
+        let height = PhotosController.shared.imageHeight(index: index)
+        
+        self.tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .top, animated: false)
+        self.tableView.contentOffset.y += self.headerViewMaxHeight + UIApplication.shared.statusBarFrame.height - (UIScreen.main.bounds.height / 2) + (height / 2)
     }
 }
