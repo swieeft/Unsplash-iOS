@@ -139,7 +139,7 @@ class APIRequest {
             return
         }
         
-        if let image = ImageCache.cache.object(forKey: url.absoluteString as NSString) {
+        if let image = ImageCache.shared[url] {
             DispatchQueue.main.async {
                 completion(image)
             }
@@ -164,7 +164,7 @@ class APIRequest {
             }
             
             DispatchQueue.main.async() {
-                ImageCache.cache.setObject(image, forKey: url.absoluteString as NSString)
+                ImageCache.shared[url] = image
                 completion(image)
                 self?.task = nil
             }

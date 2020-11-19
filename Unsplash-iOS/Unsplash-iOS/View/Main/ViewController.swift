@@ -41,10 +41,10 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        PhotosController.shared.firstPage {
-            self.tableView.reloadData()
-        } failure: { error in
-            self.showAlert(message: error)
+        PhotosController.shared.firstPage { [weak self] in
+            self?.tableView.reloadData()
+        } failure: { [weak self] error in
+            self?.showAlert(message: error)
         }
     }
     
@@ -75,7 +75,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             if let image = PhotosController.shared.image(index: index) {
                 cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
             } else {
-                PhotosController.shared.downloadImage(index: index, url: photo.urls.regular) { image in
+                PhotosController.shared.downloadImage(index: index, url: photo.urls.small) { image in
                     if tableView.indexPathsForVisibleRows?.contains(indexPath) == true {
                         cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
                         PhotosController.shared.removeImageLoadOperation(index: index)
@@ -102,24 +102,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         PhotosController.shared.cancelDownloadImage(index: indexPath.row)
     }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let y = headerViewMaxHeight - (scrollView.contentOffset.y + headerViewMaxHeight)
-        let height = min((max(y, headerViewMinHeight)), UIScreen.main.bounds.height)
-        
-        headerViewHeight.constant = height
-        
-        let alpha = 1 - (y / headerViewMaxHeight)
-        
-        switch alpha {
-        case let v where v <= 0:
-            self.alpha = 0
-        case let v where v >= 0.95:
-            self.alpha = 0.95
-        default:
-            self.alpha = alpha
-        }
-    }
 }
 
 extension ViewController: UITableViewDataSourcePrefetching {
@@ -128,7 +110,7 @@ extension ViewController: UITableViewDataSourcePrefetching {
             let index = indexPath.row
             
             if let photo = PhotosController.shared.photoData(index: index) {
-                PhotosController.shared.downloadImage(index: index, url: photo.urls.regular) { _ in
+                PhotosController.shared.downloadImage(index: index, url: photo.urls.small) { _ in
                 }
             }
         }
@@ -137,6 +119,40 @@ extension ViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
             PhotosController.shared.cancelDownloadImage(index: indexPath.row)
+        }
+    }
+}
+
+extension ViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        
+        // HeaderView 높이 조절
+        let y = headerViewMaxHeight - (offsetY + headerViewMaxHeight)
+        let height = min((max(y, headerViewMinHeight)), UIScreen.main.bounds.height)
+        
+        headerViewHeight.constant = height
+
+        // HeaderView의 Alpha 값 조절
+        let alpha = 1 - (y / headerViewMaxHeight)
+        switch alpha {
+        case let v where v <= 0:
+            self.alpha = 0
+        case let v where v >= 0.95:
+            self.alpha = 0.95
+        default:
+            self.alpha = alpha
+        }
+        
+        // 테이블 뷰 페이징 처리
+        let contentHeight = scrollView.contentSize.height
+        
+        if offsetY > (contentHeight / 2) {
+            PhotosController.shared.nextPage { [weak self] in
+                self?.tableView.reloadData()
+            } failure: { [weak self] error in
+                self?.showAlert(message: error)
+            }
         }
     }
 }

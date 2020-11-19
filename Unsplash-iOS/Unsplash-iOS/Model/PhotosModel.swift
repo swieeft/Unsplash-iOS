@@ -11,20 +11,20 @@ typealias PhotosModel = [Photo]
 
 struct Photo: Codable {
     let id: String
-    let createdAt: String
-    let updatedAt: String
+    let createdAt: String?
+    let updatedAt: String?
     let promotedAt: String?
     let width: CGFloat
     let height: CGFloat
     let color: String
-    let blurHash: String
+    let blurHash: String?
     let description: String?
     let altDescription: String?
     let urls: Urls
-    let links: Links
+    let links: Links?
     let categories: [String]?
-    let likes: Int
-    let likedByUser: Bool
+    let likes: Int?
+    let likedByUser: Bool?
     let currentUserCollections: [CurrentUserCollections]?
     let sponsorship: Sponsorship?
     let user: User
@@ -63,10 +63,10 @@ struct Photo: Codable {
     
     // MARK: - Links
     struct Links: Codable {
-        let linksSelf: String
-        let html: String
-        let download: String
-        let downloadLocation: String
+        let linksSelf: String?
+        let html: String?
+        let download: String?
+        let downloadLocation: String?
 
         enum CodingKeys: String, CodingKey {
             case linksSelf = "self"

@@ -10,7 +10,13 @@ import UIKit
 class ImageLoadOperation: Operation {
     var url: String
     var completion: ((UIImage) -> ())?
-    var image: UIImage?
+    var image: UIImage? {
+        guard let url = URL(string: self.url) else {
+            return nil
+        }
+        
+        return ImageCache.shared[url]
+    }
     
     init(url: String) {
         self.url = url
@@ -23,7 +29,6 @@ class ImageLoadOperation: Operation {
         
         let apiManager = APIManager()
         apiManager.downloadImage(url: self.url) { [weak self] image in
-            self?.image = image
             self?.completion?(image)
         } failure: { error in
             print(error)

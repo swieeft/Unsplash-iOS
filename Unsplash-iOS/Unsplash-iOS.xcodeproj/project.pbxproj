@@ -16,6 +16,7 @@
 		B51412752566384A005205D0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51412742566384A005205D0 /* ImageCache.swift */; };
 		B514127E25663981005205D0 /* APIEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514127D25663981005205D0 /* APIEnums.swift */; };
 		B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5141288256639CD005205D0 /* ResponseSuccessModel.swift */; };
+		B5389518256656E100B68A41 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5389517256656E100B68A41 /* UIImageExtension.swift */; };
 		B58CB62F2564A46500341A80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB62E2564A46500341A80 /* AppDelegate.swift */; };
 		B58CB6332564A46500341A80 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB6322564A46500341A80 /* ViewController.swift */; };
 		B58CB6362564A46500341A80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B58CB6342564A46500341A80 /* Main.storyboard */; };
@@ -58,6 +59,7 @@
 		B51412742566384A005205D0 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		B514127D25663981005205D0 /* APIEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnums.swift; sourceTree = "<group>"; };
 		B5141288256639CD005205D0 /* ResponseSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSuccessModel.swift; sourceTree = "<group>"; };
+		B5389517256656E100B68A41 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		B58CB62B2564A46500341A80 /* Unsplash-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unsplash-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58CB62E2564A46500341A80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B58CB6322564A46500341A80 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		B514125B25662745005205D0 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				B5389517256656E100B68A41 /* UIImageExtension.swift */,
 				B514125C2566274F005205D0 /* UIViewControllerExtension.swift */,
 				B514126225662A9C005205D0 /* UIColorExtension.swift */,
 			);
@@ -381,6 +384,7 @@
 				B5A34AAA25650AC9006B5A08 /* UnsplashPlistModel.swift in Sources */,
 				B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */,
 				B5CF50DC25651E7300026AB9 /* APIManager.swift in Sources */,
+				B5389518256656E100B68A41 /* UIImageExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

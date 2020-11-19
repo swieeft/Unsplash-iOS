@@ -22,6 +22,7 @@ class ImageTableViewCell: UITableViewCell {
         
         photosImageView.image = nil
         photosImageView.backgroundColor = .white
+        nameLabel.text = nil
     }
     
     func setColor(color: String) {

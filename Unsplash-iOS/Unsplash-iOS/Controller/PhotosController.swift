@@ -14,17 +14,27 @@ class PhotosController {
     
     var photos: PhotosModel?
     
-    private let imageLoadQueue = OperationQueue()
+    private lazy var imageLoadQueue: OperationQueue = {
+       let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 100
+        return queue
+    }()
     private var imageLoadOperations: [Int: ImageLoadOperation] = [:]
     
+    private var isPaging: Bool = false
     private var hasNextPage: Bool = false
     private var page: Int = 1
     
-    private init() { }
+    private init() {
+    }
     
     func firstPage(completion: @escaping () -> (), failure: @escaping (String) -> ()) {
         self.page = 1
-        apiManager.list(page: self.page) { data, hasNextPage in
+        apiManager.list(page: self.page) { [weak self] data, hasNextPage in
+            guard let self = self else {
+                return
+            }
+            
             self.photos = data
             self.hasNextPage = hasNextPage
             self.page += 1
@@ -35,18 +45,26 @@ class PhotosController {
     }
     
     func nextPage(completion: @escaping () -> (), failure: @escaping (String) -> ()) {
-        if hasNextPage == false {
+        if hasNextPage == false || isPaging == true {
             return
         }
         
-        apiManager.list(page: self.page) { data, hasNextPage in
+        isPaging = true
+        
+        apiManager.list(page: self.page) { [weak self] data, hasNextPage in
+            guard let self = self else {
+                return
+            }
+            
             if let data = data {
                 self.photos?.append(contentsOf: data)
             }
             self.hasNextPage = hasNextPage
             self.page += 1
+            self.isPaging = false
             completion()
         } failure: { error in
+            self.isPaging = false
             failure(error)
         }
     }
