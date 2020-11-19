@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B514124725660657005205D0 /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514124525660657005205D0 /* ImageTableViewCell.swift */; };
+		B514124825660657005205D0 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B514124625660657005205D0 /* ImageTableViewCell.xib */; };
+		B51412512566082E005205D0 /* PhotosController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51412502566082E005205D0 /* PhotosController.swift */; };
+		B514125D2566274F005205D0 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514125C2566274F005205D0 /* UIViewControllerExtension.swift */; };
+		B514126325662A9C005205D0 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514126225662A9C005205D0 /* UIColorExtension.swift */; };
+		B514126C256631BC005205D0 /* ImageLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514126B256631BC005205D0 /* ImageLoadOperation.swift */; };
+		B51412752566384A005205D0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51412742566384A005205D0 /* ImageCache.swift */; };
+		B514127E25663981005205D0 /* APIEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514127D25663981005205D0 /* APIEnums.swift */; };
+		B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5141288256639CD005205D0 /* ResponseSuccessModel.swift */; };
 		B58CB62F2564A46500341A80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB62E2564A46500341A80 /* AppDelegate.swift */; };
 		B58CB6332564A46500341A80 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB6322564A46500341A80 /* ViewController.swift */; };
 		B58CB6362564A46500341A80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B58CB6342564A46500341A80 /* Main.storyboard */; };
@@ -40,6 +49,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B514124525660657005205D0 /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
+		B514124625660657005205D0 /* ImageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageTableViewCell.xib; sourceTree = "<group>"; };
+		B51412502566082E005205D0 /* PhotosController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosController.swift; sourceTree = "<group>"; };
+		B514125C2566274F005205D0 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		B514126225662A9C005205D0 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		B514126B256631BC005205D0 /* ImageLoadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadOperation.swift; sourceTree = "<group>"; };
+		B51412742566384A005205D0 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		B514127D25663981005205D0 /* APIEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnums.swift; sourceTree = "<group>"; };
+		B5141288256639CD005205D0 /* ResponseSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSuccessModel.swift; sourceTree = "<group>"; };
 		B58CB62B2564A46500341A80 /* Unsplash-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unsplash-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58CB62E2564A46500341A80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B58CB6322564A46500341A80 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +104,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B514124425660635005205D0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B514124525660657005205D0 /* ImageTableViewCell.swift */,
+				B514124625660657005205D0 /* ImageTableViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		B514125B25662745005205D0 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				B514125C2566274F005205D0 /* UIViewControllerExtension.swift */,
+				B514126225662A9C005205D0 /* UIColorExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		B514126A256631B0005205D0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B514126B256631BC005205D0 /* ImageLoadOperation.swift */,
+				B51412742566384A005205D0 /* ImageCache.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		B58CB6222564A46500341A80 = {
 			isa = PBXGroup;
 			children = (
@@ -109,9 +154,11 @@
 		B58CB62D2564A46500341A80 /* Unsplash-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				B514126A256631B0005205D0 /* Utils */,
+				B514125B25662745005205D0 /* Extension */,
+				B5A34AA625650A7C006B5A08 /* Network */,
 				B5A34AAE25650B26006B5A08 /* Controller */,
 				B5A34AA725650A8D006B5A08 /* View */,
-				B5A34AA625650A7C006B5A08 /* Network */,
 				B5A34AA825650AAD006B5A08 /* Model */,
 				B58CB62E2564A46500341A80 /* AppDelegate.swift */,
 				B58CB6372564A46700341A80 /* Assets.xcassets */,
@@ -143,6 +190,7 @@
 		B5A34AA625650A7C006B5A08 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				B514127D25663981005205D0 /* APIEnums.swift */,
 				B5A34AB025650B62006B5A08 /* APIService.swift */,
 				B5A34AC825650F2D006B5A08 /* APIRequest.swift */,
 				B5CF50DB25651E7300026AB9 /* APIManager.swift */,
@@ -161,8 +209,9 @@
 		B5A34AA825650AAD006B5A08 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B5A34AA925650AC9006B5A08 /* UnsplashPlistModel.swift */,
 				B5CF50D525651BF100026AB9 /* PhotosModel.swift */,
+				B5A34AA925650AC9006B5A08 /* UnsplashPlistModel.swift */,
+				B5141288256639CD005205D0 /* ResponseSuccessModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -170,6 +219,7 @@
 		B5A34AAE25650B26006B5A08 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				B51412502566082E005205D0 /* PhotosController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -177,6 +227,7 @@
 		B5A34ACD256510B2006B5A08 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				B514124425660635005205D0 /* Cells */,
 				B58CB6322564A46500341A80 /* ViewController.swift */,
 				B58CB6342564A46500341A80 /* Main.storyboard */,
 			);
@@ -286,6 +337,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B514124825660657005205D0 /* ImageTableViewCell.xib in Resources */,
 				B58CB63B2564A46700341A80 /* LaunchScreen.storyboard in Resources */,
 				B58CB6382564A46700341A80 /* Assets.xcassets in Resources */,
 				B5A34AA225650725006B5A08 /* unsplash.plist in Resources */,
@@ -315,11 +367,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				B58CB6332564A46500341A80 /* ViewController.swift in Sources */,
+				B514127E25663981005205D0 /* APIEnums.swift in Sources */,
+				B51412752566384A005205D0 /* ImageCache.swift in Sources */,
+				B514124725660657005205D0 /* ImageTableViewCell.swift in Sources */,
+				B514125D2566274F005205D0 /* UIViewControllerExtension.swift in Sources */,
+				B514126C256631BC005205D0 /* ImageLoadOperation.swift in Sources */,
 				B58CB62F2564A46500341A80 /* AppDelegate.swift in Sources */,
 				B5CF50D625651BF100026AB9 /* PhotosModel.swift in Sources */,
+				B51412512566082E005205D0 /* PhotosController.swift in Sources */,
 				B5A34AB125650B62006B5A08 /* APIService.swift in Sources */,
 				B5A34AC925650F2D006B5A08 /* APIRequest.swift in Sources */,
+				B514126325662A9C005205D0 /* UIColorExtension.swift in Sources */,
 				B5A34AAA25650AC9006B5A08 /* UnsplashPlistModel.swift in Sources */,
+				B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */,
 				B5CF50DC25651E7300026AB9 /* APIManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

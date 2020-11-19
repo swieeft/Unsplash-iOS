@@ -30,36 +30,77 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        tableView.estimatedRowHeight = 500
         tableView.contentInset = UIEdgeInsets(top: headerViewMaxHeight, left: 0, bottom: 0, right: 0)
+        tableView.register(UINib(nibName: "ImageTableViewCell", bundle: nil), forCellReuseIdentifier: "ImageTableViewCell")
         
         searchView.layer.cornerRadius = 12
         searchView.layer.masksToBounds = true
         searchView.backgroundColor = UIColor.lightGray.withAlphaComponent(0)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        PhotosController.shared.firstPage {
+            self.tableView.reloadData()
+        } failure: { error in
+            self.showAlert(message: error)
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        let apiManager = APIManager()
-        apiManager.header { data in
-            print(data?.count ?? 0)
-        } failure: { message in
-            print(message)
-        }
-
     }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 50
+        return PhotosController.shared.photos?.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return PhotosController.shared.imageHeight(index: indexPath.row) + 1 // +1은 이미지간 여백
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "Cell \(indexPath.row)"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell", for: indexPath) as? ImageTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        let index = indexPath.row
+        
+        if let photo = PhotosController.shared.photoData(index: index) {
+            cell.setColor(color: photo.color)
+            
+            if let image = PhotosController.shared.image(index: index) {
+                cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
+            } else {
+                PhotosController.shared.downloadImage(index: index, url: photo.urls.regular) { image in
+                    if tableView.indexPathsForVisibleRows?.contains(indexPath) == true {
+                        cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
+                        PhotosController.shared.removeImageLoadOperation(index: index)
+                    }
+                }
+            }
+        }
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let cell = cell as? ImageTableViewCell else {
+            return
+        }
+        
+        let index = indexPath.row
+        
+        if let image = PhotosController.shared.image(index: index) {
+            cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        PhotosController.shared.cancelDownloadImage(index: indexPath.row)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -77,6 +118,25 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             self.alpha = 0.95
         default:
             self.alpha = alpha
+        }
+    }
+}
+
+extension ViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach { indexPath in
+            let index = indexPath.row
+            
+            if let photo = PhotosController.shared.photoData(index: index) {
+                PhotosController.shared.downloadImage(index: index, url: photo.urls.regular) { _ in
+                }
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        indexPaths.forEach { indexPath in
+            PhotosController.shared.cancelDownloadImage(index: indexPath.row)
         }
     }
 }

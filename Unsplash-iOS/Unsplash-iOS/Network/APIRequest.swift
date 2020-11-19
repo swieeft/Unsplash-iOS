@@ -5,29 +5,12 @@
 //  Created by Park GilNam on 2020/11/18.
 //
 
-import Foundation
-
-enum APIRequestType {
-    case json
-    case query
-}
-
-struct ResponseSuccessModel {
-    let statusCode: Int
-    let data: Data
-}
-
-enum APIResponce {
-    case success(response: ResponseSuccessModel)
-    case failure(error: String)
-}
-
-enum APIResult<T: Codable> {
-    case success(data: T?)
-    case failure(error: String)
-}
+import UIKit
 
 class APIRequest {
+    
+    private weak var task: URLSessionDataTask?
+    
     func request(target: APIService, completion: @escaping (APIResponce) -> ()) {
         switch target.request {
         case .json:
@@ -50,10 +33,11 @@ class APIRequest {
             request.setValue(value, forHTTPHeaderField: key)
         })
         
-        let task = URLSession.shared.dataTask(with: request) { data, res, error in
+        task = URLSession.shared.dataTask(with: request) {[weak self] data, res, error in
             if let error = error {
                 DispatchQueue.main.async {
                     completion(.failure(error: error.localizedDescription))
+                    self?.task = nil
                 }
                 return
             }
@@ -61,21 +45,31 @@ class APIRequest {
             guard let httpResponse = res as? HTTPURLResponse else {
                 DispatchQueue.main.async {
                     completion(.failure(error: "Response does not exist."))
+                    self?.task = nil
                 }
                 return
+            }
+            
+            var hasNextPage = false
+            if let link = httpResponse.allHeaderFields.filter({$0.key as? String == "Link"}).first?.value as? String {
+                hasNextPage = link.contains("rel=\"next\"")
             }
             
             guard let data = data else {
                 DispatchQueue.main.async {
                     completion(.failure(error: "Data does not exist."))
+                    self?.task = nil
                 }
                 return
             }
             
-            let response = ResponseSuccessModel(statusCode: httpResponse.statusCode, data: data)
-            completion(.success(response: response))
+            let response = ResponseSuccessModel(statusCode: httpResponse.statusCode, data: data, hasNextPage: hasNextPage)
+            DispatchQueue.main.async {
+                completion(.success(response: response))
+                self?.task = nil
+            }
         }
-        task.resume()
+        task?.resume()
     }
     
     private func requestQuery(target: APIService, completion: @escaping (APIResponce) -> ()) {
@@ -100,10 +94,11 @@ class APIRequest {
             request.setValue(value, forHTTPHeaderField: key)
         })
         
-        let task = URLSession.shared.dataTask(with: request) { data, res, error in
+        task = URLSession.shared.dataTask(with: request) { [weak self] data, res, error in
             if let error = error {
                 DispatchQueue.main.async {
                     completion(.failure(error: error.localizedDescription))
+                    self?.task = nil
                 }
                 return
             }
@@ -111,20 +106,73 @@ class APIRequest {
             guard let httpResponse = res as? HTTPURLResponse else {
                 DispatchQueue.main.async {
                     completion(.failure(error: "Response does not exist."))
+                    self?.task = nil
                 }
                 return
+            }
+            
+            var hasNextPage = false
+            if let link = httpResponse.allHeaderFields.filter({$0.key as? String == "Link"}).first?.value as? String {
+                hasNextPage = link.contains("rel=\"next\"")
             }
             
             guard let data = data else {
                 DispatchQueue.main.async {
                     completion(.failure(error: "Data does not exist."))
+                    self?.task = nil
                 }
                 return
             }
             
-            let response = ResponseSuccessModel(statusCode: httpResponse.statusCode, data: data)
-            completion(.success(response: response))
+            let response = ResponseSuccessModel(statusCode: httpResponse.statusCode, data: data, hasNextPage: hasNextPage)
+            DispatchQueue.main.async {
+                completion(.success(response: response))
+                self?.task = nil
+            }
         }
-        task.resume()
+        task?.resume()
+    }
+    
+    func downloadImage(url urlStr: String, completion: @escaping (UIImage) -> (), failure: @escaping (String) -> ()) {
+        guard let url = URL(string: urlStr) else {
+            failure("Invalid URL address")
+            return
+        }
+        
+        if let image = ImageCache.cache.object(forKey: url.absoluteString as NSString) {
+            DispatchQueue.main.async {
+                completion(image)
+            }
+            return
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = APIMethod.get.rawValue
+        
+        task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+            else {
+                DispatchQueue.main.async {
+                    failure("Download image fail : \(url)")
+                    self?.task = nil
+                }
+                return
+            }
+            
+            DispatchQueue.main.async() {
+                ImageCache.cache.setObject(image, forKey: url.absoluteString as NSString)
+                completion(image)
+                self?.task = nil
+            }
+        }
+        task?.resume()
+    }
+    
+    func cancel() {
+        task?.cancel()
     }
 }

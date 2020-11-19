@@ -26,12 +26,12 @@ struct Photo: Codable {
     let likes: Int
     let likedByUser: Bool
     let currentUserCollections: [CurrentUserCollections]?
-    let sponsorship: String?
+    let sponsorship: Sponsorship?
     let user: User
-    let exif: Exif
-    let location: Location
-    let views: Int
-    let downloads: Int
+    let exif: Exif?
+    let location: Location?
+    let views: Int?
+    let downloads: Int?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -92,6 +92,21 @@ struct Photo: Codable {
             case updatedAt = "updated_at"
             case coverPhoto = "cover_photo"
             case user
+        }
+    }
+    
+    // MARK: - Sponsorship
+    struct Sponsorship: Codable {
+        let impressionUrls: [String]
+        let tagline: String
+        let taglineURL: String
+        let sponsor: User
+
+        enum CodingKeys: String, CodingKey {
+            case impressionUrls = "impression_urls"
+            case tagline
+            case taglineURL = "tagline_url"
+            case sponsor
         }
     }
     
