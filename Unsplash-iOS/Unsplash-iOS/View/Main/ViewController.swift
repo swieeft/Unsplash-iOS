@@ -76,10 +76,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
             } else {
                 PhotosController.shared.downloadImage(index: index, url: photo.urls.small) { image in
-                    if tableView.indexPathsForVisibleRows?.contains(indexPath) == true {
-                        cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
-                        PhotosController.shared.removeImageLoadOperation(index: index)
-                    }
+                    cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
+                    PhotosController.shared.removeImageLoadOperation(index: index)
                 }
             }
         }
