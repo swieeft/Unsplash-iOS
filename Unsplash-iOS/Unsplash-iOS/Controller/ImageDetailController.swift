@@ -26,7 +26,7 @@ class ImageDetailController {
     
     private lazy var imageLoadQueue: OperationQueue = {
        let queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 100
+        queue.maxConcurrentOperationCount = 50
         return queue
     }()
     
@@ -89,7 +89,7 @@ class ImageDetailController {
         }
     }
     
-    func downloadImage(index: Int, completion: ((UIImage) -> ())?) {
+    func downloadImage(index: Int, inProgress: ((CGFloat) -> ())?, completion: ((UIImage) -> ())?) {
         if imageLoadOperations[index] != nil {
             return
         }
@@ -102,6 +102,12 @@ class ImageDetailController {
         imageLoadOperation.completion = { image in
             completion?(image)
         }
+        
+        imageLoadOperation.inProgress = { progress in
+            inProgress?(progress)
+        }
+        
+        
         
         imageLoadQueue.addOperation(imageLoadOperation)
         imageLoadOperations[index] = imageLoadOperation
@@ -125,6 +131,6 @@ class ImageDetailController {
             return nil
         }
         
-        return photo.urls.raw + "&dpr=\(Int(UIScreen.main.scale))&q=80&w=\(SizeEnum.screenWidth.value * 4)&fit=max"
+        return photo.urls.raw + "fm=jpg&fit=crop&w=4000&q=80&fit=max"
     }
 }

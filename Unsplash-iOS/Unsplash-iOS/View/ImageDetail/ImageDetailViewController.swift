@@ -73,7 +73,11 @@ extension ImageDetailViewController: UICollectionViewDataSource, UICollectionVie
         } else {
             cell.photoImageView.image = imageDetailController.thumnailImage(index: index)
 
-            imageDetailController.downloadImage(index: index) { image in
+            cell.updateProgress(progress: 0)
+            
+            imageDetailController.downloadImage(index: index) { progress in
+                cell.updateProgress(progress: progress)
+            } completion: { image in
                 cell.photoImageView.image = image
                 self.imageDetailController.removeImageLoadOperation(index: index)
             }
@@ -108,7 +112,7 @@ extension ImageDetailViewController: UICollectionViewDataSource, UICollectionVie
 extension ImageDetailViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
-            self.imageDetailController.downloadImage(index: indexPath.row, completion: nil)
+            self.imageDetailController.downloadImage(index: indexPath.row, inProgress: nil, completion: nil)
         }
     }
     

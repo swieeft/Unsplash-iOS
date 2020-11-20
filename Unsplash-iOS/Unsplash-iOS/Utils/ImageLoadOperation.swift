@@ -10,6 +10,7 @@ import UIKit
 class ImageLoadOperation: Operation {
     var url: String
     var completion: ((UIImage) -> ())?
+    var inProgress: ((CGFloat) -> ())?
     var image: UIImage? {
         return ImageCache.shared[url]
     }
@@ -24,7 +25,11 @@ class ImageLoadOperation: Operation {
         }
         
         let apiManager = APIManager()
-        apiManager.downloadImage(url: self.url) { [weak self] image in
+        apiManager.downloadImage(url: self.url) { [weak self] progress in
+            DispatchQueue.main.async {
+                self?.inProgress?(progress)
+            }
+        } completion: { [weak self] image in
             DispatchQueue.main.async {
                 self?.completion?(image)
             }

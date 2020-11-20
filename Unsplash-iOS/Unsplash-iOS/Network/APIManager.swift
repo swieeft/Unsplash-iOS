@@ -49,8 +49,10 @@ struct APIManager {
         }
     }
     
-    func downloadImage(url: String, completion: @escaping (UIImage) -> (), failure: @escaping (String) -> ()) {
-        apiRequest.downloadImage(url: url) { image in
+    func downloadImage(url: String, inProgress: @escaping (CGFloat) -> (), completion: @escaping (UIImage) -> (), failure: @escaping (String) -> ()) {
+        apiRequest.downloadImage(url: url) { progress in
+            inProgress(progress)
+        } completion: { image in
             completion(image)
         } failure: { error in
             failure(error)

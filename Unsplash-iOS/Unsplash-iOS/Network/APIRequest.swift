@@ -133,7 +133,9 @@ class APIRequest {
         task?.resume()
     }
     
-    func downloadImage(url urlStr: String, completion: @escaping (UIImage) -> (), failure: @escaping (String) -> ()) {
+    var observation: NSKeyValueObservation?
+    
+    func downloadImage(url urlStr: String, inProgress: @escaping (CGFloat) -> (), completion: @escaping (UIImage) -> (), failure: @escaping (String) -> ()) {
         guard let url = URL(string: urlStr) else {
             failure("Invalid URL address")
             return
@@ -163,6 +165,14 @@ class APIRequest {
             completion(image)
             self?.task = nil
         }
+        
+        observation = task?.progress.observe(\.fractionCompleted, changeHandler: { progress, _ in
+            inProgress(CGFloat(progress.fractionCompleted))
+            if progress.fractionCompleted == 1 {
+                self.observation = nil
+            }
+        })
+        
         task?.resume()
     }
     

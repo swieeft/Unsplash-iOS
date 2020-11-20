@@ -18,7 +18,7 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         let scrollView = UIScrollView()
         scrollView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 5.0
+        scrollView.maximumZoomScale = 4.0
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.bounces = false
@@ -47,6 +47,39 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    lazy var progressView: UIView = {
+//        let view = UIView(frame: CGRect(x: (SizeEnum.screenWidth.value / 2) - 30, y: (SizeEnum.screenHeight.value / 2) - 30, width: 60, height: 60))
+        let view = UIView(frame: CGRect(x: 0, y: (SizeEnum.screenHeight.value - SizeEnum.bottomMargin.value - 60), width: 60, height: 60))
+        view.backgroundColor = .clear//UIColor.darkGray.withAlphaComponent(0.6)
+        view.layer.cornerRadius = 12
+        view.layer.masksToBounds = true
+        view.isHidden = true
+        return view
+    }()
+    
+    lazy var progressLabel: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
+        label.textAlignment = .center
+        label.text = "0%"
+        label.textColor = UIColor.white
+        label.font = UIFont.boldSystemFont(ofSize: 11)
+        return label
+    }()
+    
+    lazy var progressLayer: CAShapeLayer = {
+        let path = UIBezierPath(arcCenter: CGPoint(x: 30, y: 30), radius: 20, startAngle: 0, endAngle: 2 * .pi, clockwise: true)
+        
+        let layer = CAShapeLayer()
+        layer.path = path.cgPath
+        layer.lineWidth = 2
+        layer.strokeEnd = 0
+        layer.strokeColor = UIColor.white.cgColor
+        layer.fillColor = UIColor.clear.cgColor
+        layer.fillMode = .forwards
+        
+        return layer
+    }()
+    
     private var panGesture: UIPanGestureRecognizer?
     
     var delegate: ImageDetailCollectionViewCellDelegate?
@@ -56,12 +89,24 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         
         self.contentView.addSubview(scrollView)
         scrollView.addSubview(photoImageView)
+        
+        self.contentView.addSubview(progressView)
+        progressView.addSubview(progressLabel)
+        progressView.layer.addSublayer(progressLayer)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+
+        scrollView.zoomScale = 1.0
         photoImageView.image = nil
+        progressView.isHidden = true
+        progressLabel.text = "0%"
+        progressLayer.strokeEnd = 0
     }
     
     @objc private func moveImageAction(_ sender: UIPanGestureRecognizer) {
@@ -103,6 +148,21 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
             self.scrollView.zoomScale = self.scrollView.zoomScale == 1.0 ? 4.0 : 1.0
         }) { _ in
             self.panGesture?.isEnabled = self.scrollView.zoomScale == 1.0 ? true : false
+        }
+    }
+    
+    func updateProgress(progress: CGFloat) {
+        progressView.isHidden = false
+        
+        let percent = Int(progress * 100)
+        progressLabel.text = "\(percent)%"
+        
+        progressLayer.strokeEnd = progress
+        
+        if progress == 1.0 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.progressView.isHidden = true
+            }
         }
     }
 }
