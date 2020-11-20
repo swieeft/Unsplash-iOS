@@ -28,16 +28,18 @@ class ImageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.register(UINib(nibName: "ImageDetailCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "ImageDetailCollectionViewCell")
+        collectionView.register(CellsEnum.imageDetail.nib, forCellWithReuseIdentifier: CellsEnum.imageDetail.id)
         
         nameLabel.text = PhotosController.shared.userName(index: currentIndex)
+        
+        PhotosController.shared.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         collectionView.performBatchUpdates(nil) { _ in
-            self.collectionView.contentOffset.x = UIScreen.main.bounds.width * CGFloat(self.currentIndex)
+            self.collectionView.contentOffset.x = SizeEnum.screenWidth.value * CGFloat(self.currentIndex)
         }
     }
     
@@ -52,11 +54,11 @@ class ImageDetailViewController: UIViewController {
 
 extension ImageDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PhotosController.shared.photos?.count ?? 0
+        return PhotosController.shared.photoCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageDetailCollectionViewCell", for: indexPath) as? ImageDetailCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CellsEnum.imageDetail.id, for: indexPath) as? ImageDetailCollectionViewCell else {
             return UICollectionViewCell()
         }
         
@@ -120,12 +122,7 @@ extension ImageDetailViewController: UICollectionViewDataSourcePrefetching {
 
 extension ImageDetailViewController: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let width = scrollView.frame.width
-        let contentOffsetX = scrollView.contentOffset.x
-        
-        let offsetX = contentOffsetX / width
-        let index = Int(round(offsetX))
-        
+        let index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
         currentIndex = index
         nameLabel.text = PhotosController.shared.userName(index: index)
     }
@@ -138,5 +135,12 @@ extension ImageDetailViewController: ImageDetailCollectionViewCellDelegate {
     
     func dismissImageDetail() {
         self.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImageDetailViewController: PhotosControllerDelegate {
+    // 이미지 리스트가 업데이트 되면 컬렉션뷰를 리로드 (페이징 처리)
+    func updatePhotos() {
+        self.collectionView.reloadData()
     }
 }

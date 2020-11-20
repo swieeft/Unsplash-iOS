@@ -16,9 +16,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var alphaView: UIView!
     @IBOutlet weak var searchView: UIView!
     
-    let headerViewMaxHeight: CGFloat = 330
-    let headerViewMinHeight: CGFloat = 68 + UIApplication.shared.statusBarFrame.height
-    
     var alpha: CGFloat = 0 {
         didSet {
             imageView.alpha = 1 - alpha
@@ -27,11 +24,25 @@ class ViewController: UIViewController {
         }
     }
     
+    enum HeaderSize {
+        case max
+        case min
+        
+        var height: CGFloat {
+            switch self {
+            case .max:
+                return 330
+            case .min:
+                return 68 + SizeEnum.statusBarHeight.value
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.contentInset = UIEdgeInsets(top: headerViewMaxHeight, left: 0, bottom: 0, right: 0)
-        tableView.register(UINib(nibName: "ImageTableViewCell", bundle: nil), forCellReuseIdentifier: "ImageTableViewCell")
+        tableView.contentInset = UIEdgeInsets(top: HeaderSize.max.height, left: 0, bottom: 0, right: 0)
+        tableView.register(CellsEnum.image.nib, forCellReuseIdentifier: CellsEnum.image.id)
         
         searchView.layer.cornerRadius = 12
         searchView.layer.masksToBounds = true
@@ -55,7 +66,7 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PhotosController.shared.photos?.count ?? 0
+        return PhotosController.shared.photoCount
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -63,7 +74,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTableViewCell", for: indexPath) as? ImageTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CellsEnum.image.id, for: indexPath) as? ImageTableViewCell else {
             return UITableViewCell()
         }
         
@@ -110,12 +121,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         vc.delegate = self
         vc.currentIndex = indexPath.row
         
-        self.present(vc, animated: true) {
-//            let height = PhotosController.shared.imageHeight(index: indexPath.row)
-//            
-//            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
-//            self.tableView.contentOffset.y += self.headerViewMaxHeight + UIApplication.shared.statusBarFrame.height - (UIScreen.main.bounds.height / 2) + (height / 2)
-        }
+        self.present(vc, animated: true, completion: nil)
     }
 }
 
@@ -143,13 +149,13 @@ extension ViewController: UIScrollViewDelegate {
         let offsetY = scrollView.contentOffset.y
         
         // HeaderView 높이 조절
-        let y = headerViewMaxHeight - (offsetY + headerViewMaxHeight)
-        let height = min((max(y, headerViewMinHeight)), UIScreen.main.bounds.height)
+        let y = HeaderSize.max.height - (offsetY + HeaderSize.max.height)
+        let height = min((max(y, HeaderSize.min.height)), SizeEnum.screenHeight.value)
         
         headerViewHeight.constant = height
 
         // HeaderView의 Alpha 값 조절
-        let alpha = 1 - (y / headerViewMaxHeight)
+        let alpha = 1 - (y / HeaderSize.max.height)
         switch alpha {
         case let v where v <= 0:
             self.alpha = 0
@@ -160,9 +166,7 @@ extension ViewController: UIScrollViewDelegate {
         }
         
         // 테이블 뷰 페이징 처리
-        let contentHeight = scrollView.contentSize.height
-        
-        if offsetY > (contentHeight / 2) {
+        if offsetY > (scrollView.contentSize.height / 2) {
             PhotosController.shared.nextPage { [weak self] in
                 self?.tableView.reloadData()
             } failure: { [weak self] error in
@@ -174,9 +178,10 @@ extension ViewController: UIScrollViewDelegate {
 
 extension ViewController: ImageDetailViewControllerDelegate {
     func changeImage(index: Int) {
+        // 이미지 상세화면에서 이미지 좌/우 이동 시 해당 이미지에 맞춰서 메인 테이블 뷰의 셀 위치도 이동 시킴
         let height = PhotosController.shared.imageHeight(index: index)
         
         self.tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .top, animated: false)
-        self.tableView.contentOffset.y += self.headerViewMaxHeight + UIApplication.shared.statusBarFrame.height - (UIScreen.main.bounds.height / 2) + (height / 2)
+        self.tableView.contentOffset.y += HeaderSize.max.height + SizeEnum.statusBarHeight.value - (SizeEnum.screenHeight.value / 2) + (height / 2)
     }
 }

@@ -7,12 +7,26 @@
 
 import UIKit
 
+protocol PhotosControllerDelegate: class {
+    func updatePhotos()
+}
+
 class PhotosController {
     static let shared = PhotosController()
     
     let apiManager = APIManager()
     
-    var photos: PhotosModel?
+    weak var delegate: PhotosControllerDelegate?
+    
+    var photos: PhotosModel? {
+        didSet {
+            delegate?.updatePhotos()
+        }
+    }
+    
+    var photoCount: Int {
+        return photos?.count ?? 0
+    }
     
     private lazy var imageLoadQueue: OperationQueue = {
        let queue = OperationQueue()

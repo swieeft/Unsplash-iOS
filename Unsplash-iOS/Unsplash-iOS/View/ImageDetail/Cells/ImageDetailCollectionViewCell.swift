@@ -14,17 +14,8 @@ protocol ImageDetailCollectionViewCellDelegate: class {
 
 class ImageDetailCollectionViewCell: UICollectionViewCell {
 
-    var scrollView: UIScrollView!
-    var photoImageView: UIImageView!
-    
-    private var panGesture: UIPanGestureRecognizer?
-    
-    var delegate: ImageDetailCollectionViewCellDelegate?
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        scrollView = UIScrollView()
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
         scrollView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         scrollView.minimumZoomScale = 1.0
         scrollView.maximumZoomScale = 4.0
@@ -34,6 +25,19 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         scrollView.zoomScale = 1.0
         scrollView.backgroundColor = .clear
         scrollView.delegate = self
+        return scrollView
+    }()
+    
+    var photoImageView: UIImageView!
+    
+    private var panGesture: UIPanGestureRecognizer?
+    
+    var delegate: ImageDetailCollectionViewCellDelegate?
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        
         
         self.contentView.addSubview(scrollView)
         
