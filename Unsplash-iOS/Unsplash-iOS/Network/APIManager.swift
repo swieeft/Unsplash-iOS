@@ -36,6 +36,19 @@ struct APIManager {
         }
     }
     
+    func search(keyword: String, page: Int, completion: @escaping (PhotosModel?, Bool) -> (), failure: @escaping (String) -> ()) {
+        apiRequest.request(target: .search(keyword: keyword, page: page)) { response in
+            let result = getResult(type: SearchModel.self, result: response)
+            
+            switch result {
+            case let .success(data, hasNextPage):
+                completion(data?.results, hasNextPage)
+            case let .failure(error):
+                failure(error)
+            }
+        }
+    }
+    
     func downloadImage(url: String, completion: @escaping (UIImage) -> (), failure: @escaping (String) -> ()) {
         apiRequest.downloadImage(url: url) { image in
             completion(image)
@@ -56,8 +69,13 @@ struct APIManager {
                     let data = try decoder.decode(type, from: response.data)
                     return .success(data: data, hasNextPage: response.hasNextPage)
                 } catch let error {
-                    print(String(data: response.data, encoding: .utf8) ?? "")
-                    return .failure(error: error.localizedDescription)
+                    let dataStr = String(data: response.data, encoding: .utf8) ?? ""
+                    
+                    if dataStr == "Rate Limit Exceeded" {
+                        return .failure(error: dataStr)
+                    } else {
+                        return .failure(error: error.localizedDescription)
+                    }
                 }
         case let .failure(error):
             return .failure(error: error)

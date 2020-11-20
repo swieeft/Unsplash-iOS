@@ -139,10 +139,8 @@ class APIRequest {
             return
         }
         
-        if let image = ImageCache.shared[url] {
-            DispatchQueue.main.async {
-                completion(image)
-            }
+        if let image = ImageCache.shared[urlStr] {
+            completion(image)
             return
         }
         
@@ -156,18 +154,14 @@ class APIRequest {
                 let data = data, error == nil,
                 let image = UIImage(data: data)
             else {
-                DispatchQueue.main.async {
-                    failure("Download image fail : \(url)")
-                    self?.task = nil
-                }
+                failure("Download image fail : \(url)")
+                self?.task = nil
                 return
             }
             
-            DispatchQueue.main.async() {
-                ImageCache.shared[url] = image
-                completion(image)
-                self?.task = nil
-            }
+            ImageCache.shared[urlStr] = image
+            completion(image)
+            self?.task = nil
         }
         task?.resume()
     }

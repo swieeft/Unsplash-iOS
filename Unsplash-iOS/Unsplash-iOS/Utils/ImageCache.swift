@@ -12,7 +12,7 @@ class ImageCache {
     
     private lazy var imageCache: NSCache<AnyObject, AnyObject> = {
         let cache = NSCache<AnyObject, AnyObject>()
-        cache.countLimit = 1000
+        cache.countLimit = 500
         return cache
     }()
     
@@ -23,7 +23,7 @@ class ImageCache {
 }
 
 extension ImageCache {
-    func image(url: URL) -> UIImage? {
+    func image(url: String) -> UIImage? {
         lock.lock()
         
         defer {
@@ -37,7 +37,7 @@ extension ImageCache {
         return nil
     }
     
-    func insertImage(_ image: UIImage?, url: URL) {
+    func insertImage(_ image: UIImage?, url: String) {
         guard let image = image else {
             removeImage(url: url)
             return
@@ -54,7 +54,7 @@ extension ImageCache {
         imageCache.setObject(decodedImage, forKey: url as AnyObject)
     }
     
-    func removeImage(url: URL) {
+    func removeImage(url: String) {
         lock.lock()
         
         defer {
@@ -74,7 +74,7 @@ extension ImageCache {
         imageCache.removeAllObjects()
     }
     
-    subscript(_ key: URL) -> UIImage? {
+    subscript(_ key: String) -> UIImage? {
         get {
             return image(url: key)
         }

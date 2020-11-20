@@ -10,6 +10,7 @@ import Foundation
 enum APIService {
     case header
     case list(page: Int)
+    case search(keyword: String, page: Int)
 }
 
 extension APIService {
@@ -23,19 +24,21 @@ extension APIService {
             return "/photos/random"
         case .list:
             return "/photos"
+        case .search:
+            return "/search/photos"
         }
     }
     
     var method: APIMethod {
         switch self {
-        case .header, .list:
+        case .header, .list, .search:
             return .get
         }
     }
     
     var request: APIRequestType {
         switch self {
-        case .header, .list:
+        case .header, .list, .search:
             return .query
         }
     }
@@ -46,12 +49,14 @@ extension APIService {
             return ["count": 10]
         case let .list(page):
             return ["page": page, "per_page": 30]
+        case let .search(keyword, page):
+            return ["query": keyword, "page": page, "per_page": 30]
         }
     }
 
     var headers: [String : String]? {
         switch self {
-        case .header, .list:
+        case .header, .list, .search:
             return APIHeader.get(.authorization, .contentType)
         }
     }

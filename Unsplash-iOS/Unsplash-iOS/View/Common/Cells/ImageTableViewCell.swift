@@ -25,8 +25,8 @@ class ImageTableViewCell: UITableViewCell {
         nameLabel.text = nil
     }
     
-    func setColor(color: String) {
-        photosImageView.backgroundColor = UIColor(hexaRGB: color)
+    func setColor(color: UIColor) {
+        photosImageView.backgroundColor = color
     }
     
     func setImage(image: UIImage, name: String) {

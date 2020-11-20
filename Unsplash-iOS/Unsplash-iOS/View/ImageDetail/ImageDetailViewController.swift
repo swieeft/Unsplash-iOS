@@ -17,6 +17,8 @@ class ImageDetailViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var nameLabel: UILabel!
     
+    var imageDetailController: ImageDetailController!
+    
     weak var delegate: ImageDetailViewControllerDelegate?
     
     var currentIndex: Int = 0 {
@@ -30,9 +32,9 @@ class ImageDetailViewController: UIViewController {
         
         collectionView.register(CellsEnum.imageDetail.nib, forCellWithReuseIdentifier: CellsEnum.imageDetail.id)
         
-        nameLabel.text = PhotosController.shared.userName(index: currentIndex)
+        nameLabel.text = imageDetailController.userName(index: currentIndex)
         
-        PhotosController.shared.delegate = self
+        imageDetailController.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,7 +56,7 @@ class ImageDetailViewController: UIViewController {
 
 extension ImageDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return PhotosController.shared.photoCount
+        return imageDetailController.photoCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -66,14 +68,14 @@ extension ImageDetailViewController: UICollectionViewDataSource, UICollectionVie
         
         let index = indexPath.row
         
-        if let image = PhotosController.shared.image(index: index) {
+        if let image = imageDetailController.image(index: index) {
             cell.photoImageView.image = image
         } else {
-            if let photo = PhotosController.shared.photoData(index: index) {
-                PhotosController.shared.downloadImage(index: index, url: photo.urls.small) { image in
-                    cell.photoImageView.image = image
-                    PhotosController.shared.removeImageLoadOperation(index: index)
-                }
+            cell.photoImageView.image = imageDetailController.thumnailImage(index: index)
+
+            imageDetailController.downloadImage(index: index) { image in
+                cell.photoImageView.image = image
+                self.imageDetailController.removeImageLoadOperation(index: index)
             }
         }
         
@@ -87,13 +89,15 @@ extension ImageDetailViewController: UICollectionViewDataSource, UICollectionVie
         
         let index = indexPath.row
         
-        if let image = PhotosController.shared.image(index: index) {
+        if let image = imageDetailController.image(index: index) {
             cell.photoImageView.image = image
+        } else {
+            cell.photoImageView.image = imageDetailController.thumnailImage(index: index)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        PhotosController.shared.cancelDownloadImage(index: indexPath.row)
+        imageDetailController.cancelDownloadImage(index: indexPath.row)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -104,27 +108,22 @@ extension ImageDetailViewController: UICollectionViewDataSource, UICollectionVie
 extension ImageDetailViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
-            let index = indexPath.row
-            
-            if let photo = PhotosController.shared.photoData(index: index) {
-                PhotosController.shared.downloadImage(index: index, url: photo.urls.small) { _ in
-                }
-            }
+            self.imageDetailController.downloadImage(index: indexPath.row, completion: nil)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cancelPrefetchingForItemsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
-            PhotosController.shared.removeImageLoadOperation(index: indexPath.row)
+            self.imageDetailController.removeImageLoadOperation(index: indexPath.row)
         }
     }
 }
 
 extension ImageDetailViewController: UIScrollViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
         currentIndex = index
-        nameLabel.text = PhotosController.shared.userName(index: index)
+        nameLabel.text = imageDetailController.userName(index: index)
     }
 }
 
@@ -138,8 +137,7 @@ extension ImageDetailViewController: ImageDetailCollectionViewCellDelegate {
     }
 }
 
-extension ImageDetailViewController: PhotosControllerDelegate {
-    // 이미지 리스트가 업데이트 되면 컬렉션뷰를 리로드 (페이징 처리)
+extension ImageDetailViewController: ImageDetailControllerDelegate {
     func updatePhotos() {
         self.collectionView.reloadData()
     }

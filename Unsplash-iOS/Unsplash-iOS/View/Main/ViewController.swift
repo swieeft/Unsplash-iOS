@@ -38,6 +38,10 @@ class ViewController: UIViewController {
         }
     }
     
+    private var searchViewTapCurrentOffset: CGFloat?
+    
+    let mainController = MainController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,30 +51,61 @@ class ViewController: UIViewController {
         searchView.layer.cornerRadius = 12
         searchView.layer.masksToBounds = true
         searchView.backgroundColor = UIColor.lightGray.withAlphaComponent(0)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchViewTapAction(_:)))
+        searchView.isUserInteractionEnabled = true
+        searchView.addGestureRecognizer(tapGesture)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        PhotosController.shared.firstPage { [weak self] in
-            self?.tableView.reloadData()
-        } failure: { [weak self] error in
-            self?.showAlert(message: error)
+        mainController.firstPage {
+            self.tableView.reloadData()
+        } failure: { error in
+            self.showAlert(message: error)
         }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
+
+    @objc func searchViewTapAction(_ gesture: UITapGestureRecognizer) {
+        let topOffsetY = -1 * HeaderSize.min.height
+        
+        if tableView.contentOffset.y > topOffsetY {
+            guard let vc = ViewControllersEnum.search.viewController as? SearchViewController else {
+                return
+            }
+            
+            self.present(vc, animated: false, completion: nil)
+        } else {
+            searchViewTapCurrentOffset = self.tableView.contentOffset.y
+            
+            UIView.animate(withDuration: 0.3) {
+                self.tableView.contentOffset.y = topOffsetY
+                self.view.layoutIfNeeded()
+            } completion: { _ in
+                guard let vc = ViewControllersEnum.search.viewController as? SearchViewController else {
+                    return
+                }
+                
+                vc.delegate = self
+                
+                self.present(vc, animated: false, completion: nil)
+            }
+        }
+    }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return PhotosController.shared.photoCount
+        return mainController.photoCount
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return PhotosController.shared.imageHeight(index: indexPath.row) + 1 // +1은 이미지간 여백
+        return mainController.imageHeight(index: indexPath.row) + 1 // +1은 이미지간 여백
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -80,16 +115,18 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         let index = indexPath.row
         
-        if let photo = PhotosController.shared.photoData(index: index) {
-            cell.setColor(color: photo.color)
-            
-            if let image = PhotosController.shared.image(index: index) {
-                cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
-            } else {
-                PhotosController.shared.downloadImage(index: index, url: photo.urls.small) { image in
-                    cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
-                    PhotosController.shared.removeImageLoadOperation(index: index)
-                }
+        let color = mainController.cellBackgroundColor(index: index)
+        cell.setColor(color: color)
+    
+        
+        let userName = mainController.userName(index: index)
+        
+        if let image = mainController.image(index: index) {
+            cell.setImage(image: image, name: userName)
+        } else {
+            mainController.downloadImage(index: index) { image in
+                cell.setImage(image: image, name: userName)
+                self.mainController.removeImageLoadOperation(index: index)
             }
         }
         
@@ -103,23 +140,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         let index = indexPath.row
         
-        if let image = PhotosController.shared.image(index: index) {
-            cell.setImage(image: image, name: PhotosController.shared.userName(index: index))
+        if let image = mainController.image(index: index) {
+            cell.setImage(image: image, name: mainController.userName(index: index))
         }
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        PhotosController.shared.cancelDownloadImage(index: indexPath.row)
+        mainController.cancelDownloadImage(index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "ImageDetailViewController", bundle: nil)
-        guard let vc = storyboard.instantiateViewController(withIdentifier: "ImageDetailViewController") as? ImageDetailViewController else {
+        guard let vc = ViewControllersEnum.imageDetail.viewController as? ImageDetailViewController else {
             return
         }
         
         vc.delegate = self
         vc.currentIndex = indexPath.row
+        vc.imageDetailController = ImageDetailController(photos: mainController.photos)
         
         self.present(vc, animated: true, completion: nil)
     }
@@ -128,18 +165,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 extension ViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
-            let index = indexPath.row
-            
-            if let photo = PhotosController.shared.photoData(index: index) {
-                PhotosController.shared.downloadImage(index: index, url: photo.urls.small) { _ in
-                }
-            }
+            self.mainController.downloadImage(index: indexPath.row, completion: nil)
         }
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
-            PhotosController.shared.cancelDownloadImage(index: indexPath.row)
+            self.mainController.cancelDownloadImage(index: indexPath.row)
         }
     }
 }
@@ -147,7 +179,7 @@ extension ViewController: UITableViewDataSourcePrefetching {
 extension ViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
-        
+
         // HeaderView 높이 조절
         let y = HeaderSize.max.height - (offsetY + HeaderSize.max.height)
         let height = min((max(y, HeaderSize.min.height)), SizeEnum.screenHeight.value)
@@ -166,20 +198,33 @@ extension ViewController: UIScrollViewDelegate {
         }
         
         // 테이블 뷰 페이징 처리
-        if offsetY > (scrollView.contentSize.height / 2) {
-            PhotosController.shared.nextPage { [weak self] in
-                self?.tableView.reloadData()
-            } failure: { [weak self] error in
-                self?.showAlert(message: error)
+        if offsetY > (scrollView.contentSize.height - scrollView.frame.height) {
+            mainController.nextPage {
+                self.tableView.reloadData()
+            } failure: { error in
+                self.showAlert(message: error)
             }
         }
     }
 }
 
-extension ViewController: ImageDetailViewControllerDelegate {
+extension ViewController: ImageDetailViewControllerDelegate, SearchViewControllerDelegate {
+    func searchCancel() {
+        guard let offsetY = self.searchViewTapCurrentOffset else {
+            return
+        }
+        
+        UIView.animate(withDuration: 0.3) {
+            self.tableView.contentOffset.y = offsetY
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.searchViewTapCurrentOffset = nil
+        }
+    }
+    
     func changeImage(index: Int) {
         // 이미지 상세화면에서 이미지 좌/우 이동 시 해당 이미지에 맞춰서 메인 테이블 뷰의 셀 위치도 이동 시킴
-        let height = PhotosController.shared.imageHeight(index: index)
+        let height = mainController.imageHeight(index: index)
         
         self.tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .top, animated: false)
         self.tableView.contentOffset.y += HeaderSize.max.height + SizeEnum.statusBarHeight.value - (SizeEnum.screenHeight.value / 2) + (height / 2)

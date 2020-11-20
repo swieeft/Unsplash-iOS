@@ -10,6 +10,8 @@ import UIKit
 enum CellsEnum {
     case image
     case imageDetail
+    case searchTitle
+    case searchKeyword
     
     var id: String {
         switch self {
@@ -17,15 +19,14 @@ enum CellsEnum {
             return "ImageTableViewCell"
         case .imageDetail:
             return "ImageDetailCollectionViewCell"
+        case .searchTitle:
+            return "SearchTitleTableViewCell"
+        case .searchKeyword:
+            return "SearchKeywordTableViewCell"
         }
     }
     
     var nib: UINib {
-        switch self {
-        case .image:
-            return UINib(nibName: "ImageTableViewCell", bundle: nil)
-        case .imageDetail:
-            return UINib(nibName: "ImageDetailCollectionViewCell", bundle: nil)
-        }
+        return UINib(nibName: self.id, bundle: nil)
     }
 }

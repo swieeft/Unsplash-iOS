@@ -18,7 +18,7 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         let scrollView = UIScrollView()
         scrollView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 4.0
+        scrollView.maximumZoomScale = 5.0
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.bounces = false
@@ -28,7 +28,24 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         return scrollView
     }()
     
-    var photoImageView: UIImageView!
+    lazy var photoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.isUserInteractionEnabled = true
+        imageView.contentMode = .scaleAspectFit
+        imageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        
+        // 이미지 뷰 이동 제스처
+        let panGesture = PanDirectionGestureRecognizer(direction: .vertical, target: self, action: #selector(moveImageAction(_:)))
+        imageView.addGestureRecognizer(panGesture)
+        self.panGesture = panGesture
+        
+        // 이미지 뷰 더블 탭 제스처
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(zoomImageAction(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        imageView.addGestureRecognizer(doubleTapGesture)
+        
+        return imageView
+    }()
     
     private var panGesture: UIPanGestureRecognizer?
     
@@ -37,26 +54,7 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        
-        
         self.contentView.addSubview(scrollView)
-        
-        
-        photoImageView = UIImageView()
-        photoImageView.isUserInteractionEnabled = true
-        photoImageView.contentMode = .scaleAspectFit
-        photoImageView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        
-        // 이미지 뷰 이동 제스처
-        let panGesture = PanDirectionGestureRecognizer(direction: .vertical, target: self, action: #selector(moveImageAction(_:)))
-        photoImageView.addGestureRecognizer(panGesture)
-        self.panGesture = panGesture
-        
-        // 이미지 뷰 더블 탭 제스처
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(zoomImageAction(_:)))
-        doubleTapGesture.numberOfTapsRequired = 2
-        photoImageView.addGestureRecognizer(doubleTapGesture)
-        
         scrollView.addSubview(photoImageView)
     }
     
