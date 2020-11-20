@@ -33,7 +33,7 @@ class MainController {
     
     func firstPage(completion: @escaping () -> (), failure: @escaping (String) -> ()) {
         self.page = 1
-        apiManager.list(page: self.page) { [weak self] data, hasNextPage in
+        apiManager.list(page: 1) { [weak self] data, hasNextPage in
             guard let self = self else {
                 return
             }

@@ -12,11 +12,24 @@ protocol SearchTitleTableViewCellDelegate: class {
 }
 
 class SearchTitleTableViewCell: UITableViewCell {
+    enum Title: String {
+        case recent = "Recent"
+        case trending = "Trending"
+    }
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var clearButton: UIButton!
+    
     weak var delegate: SearchTitleTableViewCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    func setTitle(title: Title) {
+        titleLabel.text = title.rawValue
+        clearButton.isHidden = title == .trending
     }
 
     @IBAction func clearButtonAction(_ sender: Any) {

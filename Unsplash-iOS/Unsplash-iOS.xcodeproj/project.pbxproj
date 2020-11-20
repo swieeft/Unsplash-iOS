@@ -34,6 +34,7 @@
 		B538959725679A8700B68A41 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538959625679A8700B68A41 /* SearchController.swift */; };
 		B538959C25679C0E00B68A41 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538959B25679C0E00B68A41 /* SearchModel.swift */; };
 		B53895B325679FEF00B68A41 /* ImageDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53895B225679FEF00B68A41 /* ImageDetailController.swift */; };
+		B53895BB2567AC7700B68A41 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53895BA2567AC7700B68A41 /* UserDefaultWrapper.swift */; };
 		B58CB62F2564A46500341A80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB62E2564A46500341A80 /* AppDelegate.swift */; };
 		B58CB6332564A46500341A80 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB6322564A46500341A80 /* ViewController.swift */; };
 		B58CB6362564A46500341A80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B58CB6342564A46500341A80 /* Main.storyboard */; };
@@ -94,6 +95,7 @@
 		B538959625679A8700B68A41 /* SearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		B538959B25679C0E00B68A41 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		B53895B225679FEF00B68A41 /* ImageDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailController.swift; sourceTree = "<group>"; };
+		B53895BA2567AC7700B68A41 /* UserDefaultWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultWrapper.swift; sourceTree = "<group>"; };
 		B58CB62B2564A46500341A80 /* Unsplash-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unsplash-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58CB62E2564A46500341A80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B58CB6322564A46500341A80 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				B538954E256748BD00B68A41 /* SizeEnum.swift */,
 				B538955A25674A5600B68A41 /* CellsEnum.swift */,
 				B53895692567503F00B68A41 /* ViewControllersEnum.swift */,
+				B53895BA2567AC7700B68A41 /* UserDefaultWrapper.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -482,6 +485,7 @@
 				B538954F256748BD00B68A41 /* SizeEnum.swift in Sources */,
 				B514126C256631BC005205D0 /* ImageLoadOperation.swift in Sources */,
 				B58CB62F2564A46500341A80 /* AppDelegate.swift in Sources */,
+				B53895BB2567AC7700B68A41 /* UserDefaultWrapper.swift in Sources */,
 				B5CF50D625651BF100026AB9 /* PhotosModel.swift in Sources */,
 				B538957325678A6200B68A41 /* SearchViewController.swift in Sources */,
 				B51412512566082E005205D0 /* MainController.swift in Sources */,

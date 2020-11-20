@@ -23,12 +23,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Aya-VI-5Pm">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Aya-VI-5Pm">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="1O3-AY-H7E" id="CYl-AE-hCE"/>
                                     <outlet property="delegate" destination="1O3-AY-H7E" id="lBl-Ce-pia"/>
+                                    <outlet property="prefetchDataSource" destination="1O3-AY-H7E" id="kFw-j2-7oa"/>
                                 </connections>
                             </tableView>
                             <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="48J-nJ-Qf7">
@@ -134,6 +135,7 @@
                         <outlet property="searchTextField" destination="CWX-yq-ZjX" id="kzV-9m-3Hp"/>
                         <outlet property="searchView" destination="TdN-pb-9Qu" id="Msy-nZ-zGq"/>
                         <outlet property="tableView" destination="Aya-VI-5Pm" id="fCo-fx-wkN"/>
+                        <outlet property="tableViewBottom" destination="mxt-mK-JSY" id="aJc-Go-HzG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jsF-96-7sT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

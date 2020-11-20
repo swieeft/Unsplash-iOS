@@ -15,6 +15,10 @@ class SearchKeywordTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    func setKeyword(keyword: String) {
+        keywordLabel.text = keyword
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
