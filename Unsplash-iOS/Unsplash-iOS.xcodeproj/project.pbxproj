@@ -46,6 +46,8 @@
 		B5A34AAA25650AC9006B5A08 /* UnsplashPlistModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A34AA925650AC9006B5A08 /* UnsplashPlistModel.swift */; };
 		B5A34AB125650B62006B5A08 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A34AB025650B62006B5A08 /* APIService.swift */; };
 		B5A34AC925650F2D006B5A08 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A34AC825650F2D006B5A08 /* APIRequest.swift */; };
+		B5A53D6425694D2A002CB417 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A53D6325694D2A002CB417 /* MyViewController.swift */; };
+		B5A53D6D25694D35002CB417 /* MyViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5A53D6C25694D35002CB417 /* MyViewController.storyboard */; };
 		B5CF50D625651BF100026AB9 /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CF50D525651BF100026AB9 /* PhotosModel.swift */; };
 		B5CF50DC25651E7300026AB9 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CF50DB25651E7300026AB9 /* APIManager.swift */; };
 		B5F4880B2568B68400220405 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F4880A2568B68400220405 /* UIViewExtension.swift */; };
@@ -126,6 +128,8 @@
 		B5A34AA925650AC9006B5A08 /* UnsplashPlistModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashPlistModel.swift; sourceTree = "<group>"; };
 		B5A34AB025650B62006B5A08 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		B5A34AC825650F2D006B5A08 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		B5A53D6325694D2A002CB417 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
+		B5A53D6C25694D35002CB417 /* MyViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyViewController.storyboard; sourceTree = "<group>"; };
 		B5CF50D525651BF100026AB9 /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
 		B5CF50DB25651E7300026AB9 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		B5F4880A2568B68400220405 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
@@ -353,12 +357,22 @@
 		B5A34ACD256510B2006B5A08 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				B5A53D6225694D16002CB417 /* My */,
 				B5F4881C2568F2AB00220405 /* Cells */,
 				B58CB6322564A46500341A80 /* ViewController.swift */,
 				B58CB6342564A46500341A80 /* Main.storyboard */,
 				B5F4880F2568BFD300220405 /* MainLoadingView.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		B5A53D6225694D16002CB417 /* My */ = {
+			isa = PBXGroup;
+			children = (
+				B5A53D6325694D2A002CB417 /* MyViewController.swift */,
+				B5A53D6C25694D35002CB417 /* MyViewController.storyboard */,
+			);
+			path = My;
 			sourceTree = "<group>";
 		};
 		B5F4881C2568F2AB00220405 /* Cells */ = {
@@ -508,6 +522,7 @@
 				B5389584256798AB00B68A41 /* SearchTitleTableViewCell.xib in Resources */,
 				B5A34AA225650725006B5A08 /* unsplash.plist in Resources */,
 				B538952F256661DF00B68A41 /* ImageDetailViewController.storyboard in Resources */,
+				B5A53D6D25694D35002CB417 /* MyViewController.storyboard in Resources */,
 				B58CB6362564A46500341A80 /* Main.storyboard in Resources */,
 				B538958F2567997800B68A41 /* SearchKeywordTableViewCell.xib in Resources */,
 				B5F4884B256910BD00220405 /* CollectionViewController.storyboard in Resources */,
@@ -545,6 +560,7 @@
 				B53895362566636600B68A41 /* ImageDetailCollectionViewCell.swift in Sources */,
 				B5389583256798AB00B68A41 /* SearchTitleTableViewCell.swift in Sources */,
 				B5F4881F2568F2B900220405 /* CollectionTableViewCell.swift in Sources */,
+				B5A53D6425694D2A002CB417 /* MyViewController.swift in Sources */,
 				B538958E2567997800B68A41 /* SearchKeywordTableViewCell.swift in Sources */,
 				B514127E25663981005205D0 /* APIEnums.swift in Sources */,
 				B538955B25674A5600B68A41 /* CellsEnum.swift in Sources */,

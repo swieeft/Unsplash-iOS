@@ -164,6 +164,17 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func appInfoButtonAction(_ sender: Any) {
+    }
+    
+    @IBAction func myButtonAction(_ sender: Any) {
+        guard let vc = ViewControllersEnum.my.viewController as? MyViewController else {
+            return
+        }
+        
+        self.present(vc, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -353,7 +364,6 @@ extension ViewController: MainControllerDelegate {
 // MARK: - CollectionTableViewCellDelegate
 extension ViewController: CollectionTableViewCellDelegate {
     func selectCollection(id: String, title: String) {
-        print(id)
         guard let vc = ViewControllersEnum.collection.viewController as? CollectionViewController else {
             return
         }
