@@ -29,8 +29,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pvv-JF-Y4x">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="330"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sample" translatesAutoresizingMaskIntoConstraints="NO" id="fMV-Jv-Pb0">
+                                    <visualEffectView opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDl-k0-q33">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="330"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="53I-TX-hXC">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="330"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </view>
+                                        <blurEffect style="regular"/>
+                                    </visualEffectView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fMV-Jv-Pb0">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="323"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Photos for everyone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMZ-oJ-7an">
                                         <rect key="frame" x="72" y="147.5" width="270" height="35"/>
@@ -38,9 +46,9 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo by swieeft" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Fv-rO-Abt">
-                                        <rect key="frame" x="157.5" y="298" width="99.5" height="16"/>
-                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo by" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Fv-rO-Abt">
+                                        <rect key="frame" x="180" y="291" width="54" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -81,7 +89,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search photos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9gM-JU-6fw">
                                                 <rect key="frame" x="44" y="0.0" width="116.5" height="44"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -102,12 +110,13 @@
                                     </view>
                                 </subviews>
                                 <viewLayoutGuide key="safeArea" id="LKL-cH-BTd"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="g0R-4h-p5h" secondAttribute="bottom" constant="8" id="0yi-MQ-vBa"/>
                                     <constraint firstAttribute="trailing" secondItem="EBJ-Av-ced" secondAttribute="trailing" id="6E0-Th-bpD"/>
                                     <constraint firstItem="KqS-In-m4c" firstAttribute="leading" secondItem="Pvv-JF-Y4x" secondAttribute="leading" constant="16" id="Byk-e3-JmB"/>
-                                    <constraint firstAttribute="bottom" secondItem="1Fv-rO-Abt" secondAttribute="bottom" constant="16" id="Cw5-wG-NIA"/>
+                                    <constraint firstItem="uDl-k0-q33" firstAttribute="top" secondItem="Pvv-JF-Y4x" secondAttribute="top" id="CCk-Zu-9eg"/>
+                                    <constraint firstItem="uDl-k0-q33" firstAttribute="leading" secondItem="LKL-cH-BTd" secondAttribute="leading" id="CO7-a4-Vv1"/>
+                                    <constraint firstAttribute="bottom" secondItem="1Fv-rO-Abt" secondAttribute="bottom" constant="23" id="Cw5-wG-NIA"/>
                                     <constraint firstItem="EBJ-Av-ced" firstAttribute="top" secondItem="Pvv-JF-Y4x" secondAttribute="top" id="FF1-s2-xmW"/>
                                     <constraint firstAttribute="trailing" secondItem="g0R-4h-p5h" secondAttribute="trailing" constant="16" id="HlP-N4-4PW"/>
                                     <constraint firstItem="1Fv-rO-Abt" firstAttribute="centerX" secondItem="Pvv-JF-Y4x" secondAttribute="centerX" id="IgS-zK-e5w"/>
@@ -115,6 +124,8 @@
                                     <constraint firstAttribute="trailing" secondItem="lDo-Zy-fac" secondAttribute="trailing" constant="16" id="QWb-s4-RLH"/>
                                     <constraint firstItem="hMZ-oJ-7an" firstAttribute="centerX" secondItem="Pvv-JF-Y4x" secondAttribute="centerX" id="XQn-S3-4bd"/>
                                     <constraint firstItem="KqS-In-m4c" firstAttribute="top" secondItem="LKL-cH-BTd" secondAttribute="top" constant="16" id="Xbg-f7-0WB"/>
+                                    <constraint firstAttribute="bottom" secondItem="uDl-k0-q33" secondAttribute="bottom" id="ZBY-ek-wPL"/>
+                                    <constraint firstItem="LKL-cH-BTd" firstAttribute="trailing" secondItem="uDl-k0-q33" secondAttribute="trailing" id="dMh-88-VHz"/>
                                     <constraint firstAttribute="height" constant="330" id="ed1-fW-bMg"/>
                                     <constraint firstItem="fMV-Jv-Pb0" firstAttribute="top" secondItem="Pvv-JF-Y4x" secondAttribute="top" id="fJp-5I-aYw"/>
                                     <constraint firstAttribute="trailing" secondItem="fMV-Jv-Pb0" secondAttribute="trailing" id="gBa-fg-14X"/>
@@ -124,7 +135,7 @@
                                     <constraint firstItem="g0R-4h-p5h" firstAttribute="top" secondItem="hMZ-oJ-7an" secondAttribute="bottom" constant="16" id="rAx-vM-Jjf"/>
                                     <constraint firstItem="hMZ-oJ-7an" firstAttribute="top" relation="greaterThanOrEqual" secondItem="LKL-cH-BTd" secondAttribute="top" id="uK8-P9-gh1"/>
                                     <constraint firstItem="fMV-Jv-Pb0" firstAttribute="leading" secondItem="Pvv-JF-Y4x" secondAttribute="leading" id="udK-PZ-29Q"/>
-                                    <constraint firstAttribute="bottom" secondItem="fMV-Jv-Pb0" secondAttribute="bottom" id="va5-cO-iBo"/>
+                                    <constraint firstAttribute="bottom" secondItem="fMV-Jv-Pb0" secondAttribute="bottom" constant="7" id="va5-cO-iBo"/>
                                     <constraint firstItem="lDo-Zy-fac" firstAttribute="top" secondItem="LKL-cH-BTd" secondAttribute="top" constant="16" id="xQ3-OD-xXm"/>
                                 </constraints>
                             </view>
@@ -143,9 +154,13 @@
                     </view>
                     <connections>
                         <outlet property="alphaView" destination="EBJ-Av-ced" id="8lF-wd-Zcu"/>
+                        <outlet property="headerBlurView" destination="uDl-k0-q33" id="3UE-36-T4Q"/>
+                        <outlet property="headerUserNameLabel" destination="1Fv-rO-Abt" id="bI1-Yz-jJm"/>
                         <outlet property="headerView" destination="Pvv-JF-Y4x" id="Wvh-rr-66v"/>
                         <outlet property="headerViewHeight" destination="ed1-fW-bMg" id="4jF-Xq-vaX"/>
                         <outlet property="imageView" destination="fMV-Jv-Pb0" id="ysD-5v-ZZf"/>
+                        <outlet property="searchImageView" destination="W0c-bA-8Fo" id="htM-yq-Z3E"/>
+                        <outlet property="searchLabel" destination="9gM-JU-6fw" id="Oga-7R-O5e"/>
                         <outlet property="searchView" destination="g0R-4h-p5h" id="qGt-Sf-fvf"/>
                         <outlet property="tableView" destination="kbc-Fp-X2B" id="PhX-2R-KaZ"/>
                     </connections>
@@ -158,7 +173,6 @@
     <resources>
         <image name="appInfo" width="44" height="44"/>
         <image name="profile" width="44" height="44"/>
-        <image name="sample" width="936" height="527"/>
         <image name="search" width="44" height="44"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

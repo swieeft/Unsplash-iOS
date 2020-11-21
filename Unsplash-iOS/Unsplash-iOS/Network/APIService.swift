@@ -46,7 +46,7 @@ extension APIService {
     var parameters: [String : Any] {
         switch self {
         case .header:
-            return ["count": 10]
+            return ["count": 10, "featured": true, "query": "wallpaper"]
         case let .list(page):
             return ["page": page, "per_page": 30]
         case let .search(keyword, page):

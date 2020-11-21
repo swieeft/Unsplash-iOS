@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol MainControllerDelegate: class {
+    func changeHeaderImage(image: UIImage, userName: String)
+}
+
 class MainController {
     let apiManager = APIManager()
     
@@ -15,6 +19,8 @@ class MainController {
             NotificationCenter.default.post(name: NSNotification.Name("UpdatePhotos"), object: nil, userInfo: ["Photos": photos as Any])
         }
     }
+    
+    private var headerPhotos: PhotosModel?
     
     var photoCount: Int {
         return photos?.count ?? 0
@@ -25,11 +31,34 @@ class MainController {
         queue.maxConcurrentOperationCount = 100
         return queue
     }()
-    private var imageLoadOperations: [Int : ImageLoadOperation] = [:]
+    private var imageLoadOperations: [Int: ImageLoadOperation] = [:]
+    private var headerImageLoadOperations: [Int: ImageLoadOperation] = [:]
     
     private var isPaging: Bool = false
     private var hasNextPage: Bool = false
     private var page: Int = 1
+    
+    private var currentHeaderIndex: Int = 0
+    private var headerTimer: Timer?
+    
+    weak var delegate: MainControllerDelegate?
+    
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(pauseHeaderTimer), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadHeaderImage), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+    
+    func header() {
+        apiManager.header { data in
+            guard let data = data else {
+                return
+            }
+            self.headerPhotos = data
+            self.downloadHeaderImage()
+        } failure: { error in
+            print(error)
+        }
+    }
     
     func firstPage(completion: @escaping () -> (), failure: @escaping (String) -> ()) {
         self.page = 1
@@ -156,5 +185,58 @@ class MainController {
         }
         
         return photo.urls.small
+    }
+    
+    @objc private func downloadHeaderImage() {
+        guard let headerPhotos = self.headerPhotos else {
+            return
+        }
+        
+        for i in 0..<headerPhotos.count {
+            let photo = headerPhotos[i]
+            
+            let operation = ImageLoadOperation(url: photo.urls.small)
+            
+            operation.completion = { _ in
+                self.headerImageLoadOperations.removeValue(forKey: i)
+                
+                if i == 0 {
+                    self.startHeaderTimer()
+                }
+            }
+            
+            imageLoadQueue.addOperation(operation)
+            headerImageLoadOperations[i] = operation
+        }
+    }
+    
+    private func startHeaderTimer() {
+        if headerTimer?.isValid == true {
+            return
+        }
+
+        headerTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true, block: { _ in
+            guard let photo = self.headerPhotos?[self.currentHeaderIndex],
+                  let image = ImageCache.shared[photo.urls.small] else {
+                return
+            }
+            
+            let name = photo.user.firstName + (" \(photo.user.lastName ?? "")")
+            
+            if self.currentHeaderIndex == (self.headerPhotos?.count ?? 0) - 1 {
+                self.currentHeaderIndex = 0
+            } else {
+                self.currentHeaderIndex += 1
+            }
+            
+            DispatchQueue.main.async {
+                self.delegate?.changeHeaderImage(image: image, userName: name)
+            }
+        })
+        headerTimer?.fire()
+    }
+    
+    @objc private func pauseHeaderTimer() {
+        headerTimer?.invalidate()
     }
 }

@@ -12,9 +12,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var headerBlurView: UIVisualEffectView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var headerUserNameLabel: UILabel!
     @IBOutlet weak var alphaView: UIView!
     @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var searchImageView: UIImageView!
+    @IBOutlet weak var searchLabel: UILabel!
     
     lazy var loadingView: MainLoadingView = {
         let view = MainLoadingView()
@@ -27,7 +31,16 @@ class ViewController: UIViewController {
         didSet {
             imageView.alpha = 1 - alpha
             alphaView.alpha = alpha
-            searchView.backgroundColor = UIColor.lightGray.withAlphaComponent(alpha)
+            headerBlurView.alpha = alpha
+            searchView.backgroundColor = UIColor.lightGray.withAlphaComponent(alpha * 0.8)
+            
+            var colorValue = (1 - (alpha * 0.8))
+            colorValue = colorValue > 1 ? 1 : (1 - (alpha * 0.8))
+
+            let color = UIColor(red: colorValue, green: colorValue, blue: colorValue, alpha: 1)
+            
+            searchImageView.tintColor = color
+            searchLabel.textColor = color
         }
     }
     
@@ -69,11 +82,21 @@ class ViewController: UIViewController {
             .bottomAnchor(equalTo: self.view.bottomAnchor)
             .leadingAnchor(equalTo: self.view.leadingAnchor)
             .trailingAnchor(equalTo: self.view.trailingAnchor)
+        
+        mainController.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setMainData()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    func setMainData() {
         loadingView.startAnimation()
         
         mainController.firstPage {
@@ -89,10 +112,8 @@ class ViewController: UIViewController {
         } failure: { error in
             self.showAlert(message: error)
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        
+        mainController.header()
     }
 
     @objc func searchViewTapAction(_ gesture: UITapGestureRecognizer) {
@@ -215,8 +236,8 @@ extension ViewController: UIScrollViewDelegate {
         switch alpha {
         case let v where v <= 0:
             self.alpha = 0
-        case let v where v >= 0.95:
-            self.alpha = 0.95
+        case let v where v >= 0.8:
+            self.alpha = 0.8
         default:
             self.alpha = alpha
         }
@@ -228,6 +249,17 @@ extension ViewController: UIScrollViewDelegate {
             } failure: { error in
                 self.showAlert(message: error)
             }
+        }
+    }
+}
+
+extension ViewController: MainControllerDelegate {
+    func changeHeaderImage(image: UIImage, userName: String) {
+        UIView.transition(with: imageView, duration: 0.5, options: .transitionCrossDissolve) {
+            self.imageView.image = image
+            self.headerUserNameLabel.text = "Photo by \(userName)"
+        } completion: { _ in
+            
         }
     }
 }

@@ -131,6 +131,6 @@ class ImageDetailController {
             return nil
         }
         
-        return photo.urls.raw + "fm=jpg&fit=crop&w=4000&q=80&fit=max"
+        return photo.urls.raw + "&fm=jpg&fit=crop&w=4000&q=80&fit=max"
     }
 }
