@@ -11,6 +11,8 @@ class APIRequest {
     
     private weak var task: URLSessionDataTask?
     
+    private var observation: NSKeyValueObservation? // 이미지 다운로드 시 진행상태 표시
+    
     func request(target: APIService, completion: @escaping (APIResponce) -> ()) {
         switch target.request {
         case .json:
@@ -133,8 +135,6 @@ class APIRequest {
         task?.resume()
     }
     
-    var observation: NSKeyValueObservation?
-    
     func downloadImage(url urlStr: String, inProgress: @escaping (CGFloat) -> (), completion: @escaping (UIImage) -> (), failure: @escaping (String) -> ()) {
         guard let url = URL(string: urlStr) else {
             failure("Invalid URL address")
@@ -166,6 +166,7 @@ class APIRequest {
             self?.task = nil
         }
         
+        // 이미지 다운로드 진행 상태
         observation = task?.progress.observe(\.fractionCompleted, changeHandler: { progress, _ in
             inProgress(CGFloat(progress.fractionCompleted))
             if progress.fractionCompleted == 1 {

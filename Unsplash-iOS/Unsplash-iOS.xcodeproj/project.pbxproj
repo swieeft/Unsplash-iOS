@@ -180,6 +180,7 @@
 		B514125B25662745005205D0 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				B5F4880A2568B68400220405 /* UIViewExtension.swift */,
 				B5389517256656E100B68A41 /* UIImageExtension.swift */,
 				B514125C2566274F005205D0 /* UIViewControllerExtension.swift */,
 				B514126225662A9C005205D0 /* UIColorExtension.swift */,
@@ -193,11 +194,7 @@
 				B514126B256631BC005205D0 /* ImageLoadOperation.swift */,
 				B51412742566384A005205D0 /* ImageCache.swift */,
 				B538953E2566B01700B68A41 /* PanDirectionGestureRecognizer.swift */,
-				B538954E256748BD00B68A41 /* SizeEnum.swift */,
-				B538955A25674A5600B68A41 /* CellsEnum.swift */,
-				B53895692567503F00B68A41 /* ViewControllersEnum.swift */,
 				B53895BA2567AC7700B68A41 /* UserDefaultWrapper.swift */,
-				B5F4880A2568B68400220405 /* UIViewExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -273,6 +270,7 @@
 		B58CB62D2564A46500341A80 /* Unsplash-iOS */ = {
 			isa = PBXGroup;
 			children = (
+				B5F4885A25693CAA00220405 /* Enums */,
 				B514126A256631B0005205D0 /* Utils */,
 				B514125B25662745005205D0 /* Extension */,
 				B5A34AA625650A7C006B5A08 /* Network */,
@@ -309,7 +307,6 @@
 		B5A34AA625650A7C006B5A08 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				B514127D25663981005205D0 /* APIEnums.swift */,
 				B5A34AB025650B62006B5A08 /* APIService.swift */,
 				B5A34AC825650F2D006B5A08 /* APIRequest.swift */,
 				B5CF50DB25651E7300026AB9 /* APIManager.swift */,
@@ -384,6 +381,17 @@
 				B5F4884A256910BD00220405 /* CollectionViewController.storyboard */,
 			);
 			path = Collection;
+			sourceTree = "<group>";
+		};
+		B5F4885A25693CAA00220405 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				B514127D25663981005205D0 /* APIEnums.swift */,
+				B538954E256748BD00B68A41 /* SizeEnum.swift */,
+				B538955A25674A5600B68A41 /* CellsEnum.swift */,
+				B53895692567503F00B68A41 /* ViewControllersEnum.swift */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
