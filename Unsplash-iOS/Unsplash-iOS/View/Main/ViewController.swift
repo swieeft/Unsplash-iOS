@@ -166,6 +166,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func appInfoButtonAction(_ sender: Any) {
+        guard let vc = ViewControllersEnum.appInfo.viewController as? AppInfoViewController else {
+            return
+        }
+        
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func myButtonAction(_ sender: Any) {
