@@ -16,6 +16,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var alphaView: UIView!
     @IBOutlet weak var searchView: UIView!
     
+    lazy var loadingView: MainLoadingView = {
+        let view = MainLoadingView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     var alpha: CGFloat = 0 {
         didSet {
             imageView.alpha = 1 - alpha
@@ -55,13 +62,30 @@ class ViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(searchViewTapAction(_:)))
         searchView.isUserInteractionEnabled = true
         searchView.addGestureRecognizer(tapGesture)
+        
+        self.view.addSubview(loadingView)
+        loadingView
+            .topAnchor(equalTo: self.view.topAnchor)
+            .bottomAnchor(equalTo: self.view.bottomAnchor)
+            .leadingAnchor(equalTo: self.view.leadingAnchor)
+            .trailingAnchor(equalTo: self.view.trailingAnchor)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        loadingView.startAnimation()
+        
         mainController.firstPage {
             self.tableView.reloadData()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                UIView.animate(withDuration: 0.5) {
+                    self.loadingView.alpha = 0
+                } completion: { _ in
+                    self.loadingView.stopAnimation()
+                }
+            }
         } failure: { error in
             self.showAlert(message: error)
         }

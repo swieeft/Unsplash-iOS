@@ -48,6 +48,8 @@
 		B5A34AC925650F2D006B5A08 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A34AC825650F2D006B5A08 /* APIRequest.swift */; };
 		B5CF50D625651BF100026AB9 /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CF50D525651BF100026AB9 /* PhotosModel.swift */; };
 		B5CF50DC25651E7300026AB9 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CF50DB25651E7300026AB9 /* APIManager.swift */; };
+		B5F4880B2568B68400220405 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F4880A2568B68400220405 /* UIViewExtension.swift */; };
+		B5F488102568BFD300220405 /* MainLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F4880F2568BFD300220405 /* MainLoadingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +117,8 @@
 		B5A34AC825650F2D006B5A08 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		B5CF50D525651BF100026AB9 /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
 		B5CF50DB25651E7300026AB9 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		B5F4880A2568B68400220405 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		B5F4880F2568BFD300220405 /* MainLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainLoadingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +175,7 @@
 				B538955A25674A5600B68A41 /* CellsEnum.swift */,
 				B53895692567503F00B68A41 /* ViewControllersEnum.swift */,
 				B53895BA2567AC7700B68A41 /* UserDefaultWrapper.swift */,
+				B5F4880A2568B68400220405 /* UIViewExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -327,6 +332,7 @@
 			children = (
 				B58CB6322564A46500341A80 /* ViewController.swift */,
 				B58CB6342564A46500341A80 /* Main.storyboard */,
+				B5F4880F2568BFD300220405 /* MainLoadingView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -468,6 +474,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5F4880B2568B68400220405 /* UIViewExtension.swift in Sources */,
 				B58CB6332564A46500341A80 /* ViewController.swift in Sources */,
 				B538956A2567503F00B68A41 /* ViewControllersEnum.swift in Sources */,
 				B538953F2566B01700B68A41 /* PanDirectionGestureRecognizer.swift in Sources */,
@@ -495,6 +502,7 @@
 				B5A34AAA25650AC9006B5A08 /* UnsplashPlistModel.swift in Sources */,
 				B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */,
 				B5389527256661D800B68A41 /* ImageDetailViewController.swift in Sources */,
+				B5F488102568BFD300220405 /* MainLoadingView.swift in Sources */,
 				B5CF50DC25651E7300026AB9 /* APIManager.swift in Sources */,
 				B5389518256656E100B68A41 /* UIImageExtension.swift in Sources */,
 			);
