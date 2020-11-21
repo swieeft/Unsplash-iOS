@@ -11,6 +11,7 @@ enum ViewControllersEnum {
     case mainVC
     case imageDetail
     case search
+    case collection
     
     var id: String {
         switch self {
@@ -20,6 +21,8 @@ enum ViewControllersEnum {
             return "ImageDetailViewController"
         case .search:
             return "SearchViewController"
+        case .collection:
+            return "CollectionViewController"
         }
     }
     

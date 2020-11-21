@@ -12,6 +12,9 @@ enum CellsEnum {
     case imageDetail
     case searchTitle
     case searchKeyword
+    case collection
+    case collectionItem
+    case mainListTitle
     
     var id: String {
         switch self {
@@ -23,6 +26,12 @@ enum CellsEnum {
             return "SearchTitleTableViewCell"
         case .searchKeyword:
             return "SearchKeywordTableViewCell"
+        case .collection:
+            return "CollectionTableViewCell"
+        case .collectionItem:
+            return "CollectionItemCollectionViewCell"
+        case .mainListTitle:
+            return "MainListTitleTableViewCell"
         }
     }
     

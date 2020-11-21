@@ -49,6 +49,32 @@ struct APIManager {
         }
     }
     
+    func collectionList(page: Int, completion: @escaping (CollectionModel?, Bool) -> (), failure: @escaping (String) -> ()) {
+        apiRequest.request(target: .collectionList(page: page)) { response in
+            let result = getResult(type: CollectionModel.self, result: response)
+            
+            switch result {
+            case let .success(data, hasNextPage):
+                completion(data, hasNextPage)
+            case let .failure(error):
+                failure(error)
+            }
+        }
+    }
+    
+    func collection(id: String, page: Int, completion: @escaping (PhotosModel?, Bool) -> (), failure: @escaping (String) -> ()) {
+        apiRequest.request(target: .collection(id: id, page: page)) { response in
+            let result = getResult(type: PhotosModel.self, result: response)
+            
+            switch result {
+            case let .success(data, hasNextPage):
+                completion(data, hasNextPage)
+            case let .failure(error):
+                failure(error)
+            }
+        }
+    }
+    
     func downloadImage(url: String, inProgress: @escaping (CGFloat) -> (), completion: @escaping (UIImage) -> (), failure: @escaping (String) -> ()) {
         apiRequest.downloadImage(url: url) { progress in
             inProgress(progress)
