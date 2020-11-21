@@ -54,7 +54,7 @@ class SearchViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.15) {
             self.cancelButton.isHidden = false
             self.view.layoutIfNeeded()
         } completion: { _ in
@@ -101,7 +101,7 @@ class SearchViewController: UIViewController {
     }
 
     @IBAction func cancelButtonAction(_ sender: Any) {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.15) {
             self.cancelButton.isHidden = true
             self.view.layoutIfNeeded()
         } completion: { _ in
@@ -322,15 +322,30 @@ extension SearchViewController: UIScrollViewDelegate {
 
 extension SearchViewController: SearchTitleTableViewCellDelegate {
     func recentClear() {
-        searchController.removeRecentKeyword()
-        self.tableView.reloadData()
+        let alert = UIAlertController(title: nil, message: "Recently Clear Search History?", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .destructive) { _ in
+            self.searchController.removeRecentKeyword()
+            self.tableView.reloadData()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
 extension SearchViewController: ImageDetailViewControllerDelegate {
     func changeImage(index: Int) {
         // 이미지 상세화면에서 이미지 좌/우 이동 시 해당 이미지에 맞춰서 메인 테이블 뷰의 셀 위치도 이동 시킴
-        self.tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .middle, animated: false)
-        self.tableView.contentOffset.y += tableViewTopInset - SizeEnum.statusBarHeight.value
+        let imageHeight = searchController.imageHeight(index: index)
+        let screenHeight = SizeEnum.screenHeight.value
+        let statusBarHeight = SizeEnum.statusBarHeight.value
+        
+        self.tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .top, animated: false)
+        
+        let y = (self.tableView.contentOffset.y + tableViewTopInset + statusBarHeight) - (screenHeight / 2) + (imageHeight / 2)
+        self.tableView.contentOffset.y = y < 0 ? 0 : y
     }
 }

@@ -120,6 +120,7 @@ extension CollectionViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
 
+        print(offsetY)
         // 테이블 뷰 페이징 처리
         if offsetY > (scrollView.contentSize.height / 2) {
             collectionController.nextPage {
@@ -134,9 +135,14 @@ extension CollectionViewController: UIScrollViewDelegate {
 extension CollectionViewController: ImageDetailViewControllerDelegate {
     func changeImage(index: Int) {
         // 이미지 상세화면에서 이미지 좌/우 이동 시 해당 이미지에 맞춰서 메인 테이블 뷰의 셀 위치도 이동 시킴
-        let height = collectionController.imageHeight(index: index)
+        let imageHeight = collectionController.imageHeight(index: index)
+        let screenHeight = SizeEnum.screenHeight.value
+        let statusBarHeight = SizeEnum.statusBarHeight.value
+        let navigationHeight = self.navigationController?.navigationBar.frame.height ?? 0
         
         self.tableView.scrollToRow(at: IndexPath(row: index, section: 0), at: .top, animated: false)
-        self.tableView.contentOffset.y += (SizeEnum.screenHeight.value / 2) - (height / 2) - SizeEnum.statusBarHeight.value - (self.navigationController?.navigationBar.frame.height ?? 0)
+        
+        let y = (self.tableView.contentOffset.y + statusBarHeight + navigationHeight) - (screenHeight / 2) + (imageHeight / 2)
+        self.tableView.contentOffset.y = y < 0 ? 0 : y
     }
 }
