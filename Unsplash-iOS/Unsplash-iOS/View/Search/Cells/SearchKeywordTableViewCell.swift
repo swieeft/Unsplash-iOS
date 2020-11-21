@@ -9,8 +9,10 @@ import UIKit
 
 class SearchKeywordTableViewCell: UITableViewCell {
 
+    // MARK: - UI
     @IBOutlet weak var keywordLabel: UILabel!
     
+    // MARK: - Function
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

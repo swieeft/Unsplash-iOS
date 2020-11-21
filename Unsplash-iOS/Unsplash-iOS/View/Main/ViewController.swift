@@ -7,43 +7,11 @@
 
 import UIKit
 
+// 메인화면
+
 class ViewController: UIViewController {
-
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var headerBlurView: UIVisualEffectView!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var headerUserNameLabel: UILabel!
-    @IBOutlet weak var alphaView: UIView!
-    @IBOutlet weak var searchView: UIView!
-    @IBOutlet weak var searchImageView: UIImageView!
-    @IBOutlet weak var searchLabel: UILabel!
-    
-    lazy var loadingView: MainLoadingView = {
-        let view = MainLoadingView()
-        view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    var alpha: CGFloat = 0 {
-        didSet {
-            imageView.alpha = 1 - alpha
-            alphaView.alpha = alpha
-            headerBlurView.alpha = alpha
-            searchView.backgroundColor = UIColor.lightGray.withAlphaComponent(alpha * 0.8)
-            
-            var colorValue = (1 - (alpha * 0.8))
-            colorValue = colorValue > 1 ? 1 : (1 - (alpha * 0.8))
-
-            let color = UIColor(red: colorValue, green: colorValue, blue: colorValue, alpha: 1)
-            
-            searchImageView.tintColor = color
-            searchLabel.textColor = color
-        }
-    }
-    
+    // MARK: - HeaderSize Enum
+    // 헤더뷰의 사이즈
     enum HeaderSize {
         case max
         case min
@@ -58,10 +26,52 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: - UI
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var headerViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var headerBlurView: UIVisualEffectView!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var headerUserNameLabel: UILabel!
+    @IBOutlet weak var alphaView: UIView!
+    @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var searchImageView: UIImageView!
+    @IBOutlet weak var searchLabel: UILabel!
+    
+    // 앱 실행 후 데이터 로딩 전 보여지는 뷰
+    lazy var loadingView: MainLoadingView = {
+        let view = MainLoadingView()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    // MARK: - Property
+    // 헤더뷰의 alpha 값
+    var headerAlpha: CGFloat = 0 {
+        didSet {
+            // alpha 값에 따라 headerView의 각 컨트롤 설정
+            imageView.alpha = 1 - headerAlpha
+            alphaView.alpha = headerAlpha
+            headerBlurView.alpha = headerAlpha
+            searchView.backgroundColor = UIColor.lightGray.withAlphaComponent(headerAlpha * 0.8)
+            
+            var colorValue = (1 - (headerAlpha * 0.8))
+            colorValue = colorValue > 1 ? 1 : (1 - (headerAlpha * 0.8))
+
+            let color = UIColor(red: colorValue, green: colorValue, blue: colorValue, alpha: 1)
+            
+            searchImageView.tintColor = color
+            searchLabel.textColor = color
+        }
+    }
+
+    // 검색을 탭 했을 시 현재 메인화면의 리스트 offset 값
     private var searchViewTapCurrentOffset: CGFloat?
     
     let mainController = MainController()
     
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,6 +114,8 @@ class ViewController: UIViewController {
         super.viewDidAppear(animated)
     }
     
+    // MARK: - Function
+    // 메인화면 데이터 API 호출
     func setMainData() {
         loadingView.startAnimation()
         
@@ -124,9 +136,11 @@ class ViewController: UIViewController {
         mainController.header()
     }
 
+    // 검색창 탭
     @objc func searchViewTapAction(_ gesture: UITapGestureRecognizer) {
         let topOffsetY = -1 * HeaderSize.min.height
         
+        // 헤더 뷰가 최소 사이즈일 경우에는 검색 뷰컨을 바로 호출하고, 그렇지 않으면 최소 사이즈로 변경 후 검색 뷰컨 호출
         if tableView.contentOffset.y > topOffsetY {
             guard let vc = ViewControllersEnum.search.viewController as? SearchViewController else {
                 return
@@ -152,9 +166,10 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mainController.photoCount + 3
+        return mainController.photoCount + 3 // 3개는 타이틀 셀 2개, 컬렉션 리스트 셀 1개
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -250,6 +265,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         
+        // 이미지 상세화면 보기
         guard let vc = ViewControllersEnum.imageDetail.viewController as? ImageDetailViewController else {
             return
         }
@@ -261,11 +277,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         self.present(vc, animated: true, completion: nil)
     }
     
+    // 실제 이미지 리스트의 index
     func getImageIndex(_ indexPath: IndexPath) -> Int {
         return indexPath.row - 3
     }
 }
 
+// MARK: - UITableViewDataSourcePrefetching
 extension ViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
@@ -286,6 +304,7 @@ extension ViewController: UITableViewDataSourcePrefetching {
     }
 }
 
+// MARK: - UIScrollViewDelegate
 extension ViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
@@ -300,11 +319,11 @@ extension ViewController: UIScrollViewDelegate {
         let alpha = 1 - (y / HeaderSize.max.height)
         switch alpha {
         case let v where v <= 0:
-            self.alpha = 0
+            self.headerAlpha = 0
         case let v where v >= 0.8:
-            self.alpha = 0.8
+            self.headerAlpha = 0.8
         default:
-            self.alpha = alpha
+            self.headerAlpha = alpha
         }
         
         // 테이블 뷰 페이징 처리
@@ -318,7 +337,9 @@ extension ViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - MainControllerDelegate
 extension ViewController: MainControllerDelegate {
+    // 헤더 뷰 이미지 변경
     func changeHeaderImage(image: UIImage, userName: String) {
         UIView.transition(with: imageView, duration: 0.5, options: .transitionCrossDissolve) {
             self.imageView.image = image
@@ -329,6 +350,7 @@ extension ViewController: MainControllerDelegate {
     }
 }
 
+// MARK: - CollectionTableViewCellDelegate
 extension ViewController: CollectionTableViewCellDelegate {
     func selectCollection(id: String, title: String) {
         print(id)
@@ -346,6 +368,7 @@ extension ViewController: CollectionTableViewCellDelegate {
     }
 }
 
+// MARK: - ImageDetailViewControllerDelegate, SearchViewControllerDelegate
 extension ViewController: ImageDetailViewControllerDelegate, SearchViewControllerDelegate {
     func searchCancel() {
         self.tableView.reloadData()

@@ -7,7 +7,10 @@
 
 import UIKit
 
+// 이미지 캐시
+
 class ImageCache {
+    // MARK: - Property
     static let shared = ImageCache()
     
     private lazy var imageCache: NSCache<AnyObject, AnyObject> = {
@@ -18,11 +21,11 @@ class ImageCache {
     
     private let lock = NSLock()
     
+    // MARK: - Initialization
     private init() {
     }
-}
-
-extension ImageCache {
+    
+    // MARK: - Function
     func image(url: String) -> UIImage? {
         lock.lock()
         
@@ -74,6 +77,7 @@ extension ImageCache {
         imageCache.removeAllObjects()
     }
     
+    // MARK: - Subscript
     subscript(_ key: String) -> UIImage? {
         get {
             return image(url: key)

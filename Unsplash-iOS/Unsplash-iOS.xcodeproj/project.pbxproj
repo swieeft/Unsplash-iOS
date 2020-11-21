@@ -331,9 +331,9 @@
 			children = (
 				B5CF50D525651BF100026AB9 /* PhotosModel.swift */,
 				B538959B25679C0E00B68A41 /* SearchModel.swift */,
+				B5F488342569031700220405 /* CollectionModel.swift */,
 				B5A34AA925650AC9006B5A08 /* UnsplashPlistModel.swift */,
 				B5141288256639CD005205D0 /* ResponseSuccessModel.swift */,
-				B5F488342569031700220405 /* CollectionModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";

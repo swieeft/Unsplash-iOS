@@ -8,11 +8,13 @@
 import UIKit
 
 class CollectionViewController: UIViewController {
-
+    // MARK: - UI
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: - Property
     var collectionController: CollectionController!
     
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,6 +37,7 @@ class CollectionViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension CollectionViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return collectionController.photoCount + 3
@@ -102,6 +105,7 @@ extension CollectionViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDataSourcePrefetching
 extension CollectionViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
@@ -116,6 +120,7 @@ extension CollectionViewController: UITableViewDataSourcePrefetching {
     }
 }
 
+// MARK: - UIScrollViewDelegate
 extension CollectionViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
@@ -132,6 +137,7 @@ extension CollectionViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - ImageDetailViewControllerDelegate
 extension CollectionViewController: ImageDetailViewControllerDelegate {
     func changeImage(index: Int) {
         // 이미지 상세화면에서 이미지 좌/우 이동 시 해당 이미지에 맞춰서 메인 테이블 뷰의 셀 위치도 이동 시킴

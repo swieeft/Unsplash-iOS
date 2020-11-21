@@ -7,12 +7,15 @@
 
 import UIKit
 
+// MARK: - SearchViewControllerDelegate
 protocol SearchViewControllerDelegate: class {
     func searchCancel()
 }
 
+// MARK: - SearchViewController
 class SearchViewController: UIViewController {
 
+    // MARK: - UI
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchLabel: UILabel!
     @IBOutlet weak var searchTextField: UITextField!
@@ -21,6 +24,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     
+    // MARK: - Property
     let searchController = SearchController()
     
     weak var delegate: SearchViewControllerDelegate?
@@ -29,6 +33,7 @@ class SearchViewController: UIViewController {
     
     let tableViewTopInset: CGFloat = 68
     
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,6 +72,7 @@ class SearchViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // MARK: - Function
     // 키보드가 나타날 때
     @objc func keyboardWillAppear(note: NSNotification) {
         if let keyboardFrame: NSValue = note.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -100,6 +106,7 @@ class SearchViewController: UIViewController {
         isKeyboardShow = false
     }
 
+    // 검색 취소
     @IBAction func cancelButtonAction(_ sender: Any) {
         UIView.animate(withDuration: 0.15) {
             self.cancelButton.isHidden = true
@@ -110,6 +117,7 @@ class SearchViewController: UIViewController {
         }
     }
     
+    // 검색 키워드의 첫번째 호출
     func getFirstPage(keyword: String) {
         searchController.firstPage(keyword: keyword) {
             self.tableView.reloadData()
@@ -119,7 +127,9 @@ class SearchViewController: UIViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension SearchViewController: UITextFieldDelegate {
+    // 검색
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         
@@ -150,9 +160,10 @@ extension SearchViewController: UITextFieldDelegate {
     }
 }
 
+// MARK: - UITableViewDelegate, UITableViewDataSource
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let count = searchController.cellCount
+        let count = searchController.keywordCellCount
         tableView.alpha = count > 0 ? 1 : 0
         return count
     }
@@ -293,6 +304,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - UITableViewDataSourcePrefetching
 extension SearchViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
@@ -307,6 +319,7 @@ extension SearchViewController: UITableViewDataSourcePrefetching {
     }
 }
 
+// MARK: - UIScrollViewDelegate
 extension SearchViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 테이블 뷰 페이징 처리
@@ -320,7 +333,9 @@ extension SearchViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - SearchTitleTableViewCellDelegate
 extension SearchViewController: SearchTitleTableViewCellDelegate {
+    // 검색 기록 삭제
     func recentClear() {
         let alert = UIAlertController(title: nil, message: "Recently Clear Search History?", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .destructive) { _ in
@@ -336,6 +351,7 @@ extension SearchViewController: SearchTitleTableViewCellDelegate {
     }
 }
 
+// MARK: - ImageDetailViewControllerDelegate
 extension SearchViewController: ImageDetailViewControllerDelegate {
     func changeImage(index: Int) {
         // 이미지 상세화면에서 이미지 좌/우 이동 시 해당 이미지에 맞춰서 메인 테이블 뷰의 셀 위치도 이동 시킴

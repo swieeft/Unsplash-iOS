@@ -7,6 +7,7 @@
 
 import Foundation
 
+// 검색 데이터 모델
 struct SearchModel: Codable {
     let total: Int
     let totalPages: Int

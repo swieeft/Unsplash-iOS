@@ -8,6 +8,7 @@
 import UIKit
 
 class MainLoadingView: UIView {
+    // MARK: - UI
     lazy var loadingLayerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -118,6 +119,7 @@ class MainLoadingView: UIView {
     
     lazy var layers: [CAShapeLayer] = [iconRect1Layer, iconRect2Layer, iconRect3Layer, iconRect4Layer, iconRect5Layer, iconRect6Layer]
 
+    // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -141,6 +143,7 @@ class MainLoadingView: UIView {
         }
     }
     
+    // MARK: - Function
     func startAnimation() {
         for i in 0..<layers.count {
             let layer = layers[i]

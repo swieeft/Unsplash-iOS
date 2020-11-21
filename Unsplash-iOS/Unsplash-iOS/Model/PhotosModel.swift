@@ -7,8 +7,10 @@
 
 import UIKit
 
+// 이미지 리스트 데이터 모델
 typealias PhotosModel = [Photo]
 
+// 이미지 데이터 모델
 struct Photo: Codable {
     let id: String
     let createdAt: String?

@@ -8,11 +8,12 @@
 import UIKit
 
 class APIRequest {
-    
+    // MARK: - Property
     private weak var task: URLSessionDataTask?
     
     private var observation: NSKeyValueObservation? // 이미지 다운로드 시 진행상태 표시
     
+    // MARK: - Function
     func request(target: APIService, completion: @escaping (APIResponce) -> ()) {
         switch target.request {
         case .json:

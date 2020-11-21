@@ -7,12 +7,16 @@
 
 import UIKit
 
+// 컬렉션 리스트의 각 컬렉션 정보 셀
+
 class CollectionItemCollectionViewCell: UICollectionViewCell {
 
+    // MARK: - UI
     @IBOutlet weak var cellBackgroundView: UIView!
     @IBOutlet weak var collectionImageView: UIImageView!
     @IBOutlet weak var collectionTitleLabel: UILabel!
     
+    // MARK: - Function
     override func awakeFromNib() {
         super.awakeFromNib()
         

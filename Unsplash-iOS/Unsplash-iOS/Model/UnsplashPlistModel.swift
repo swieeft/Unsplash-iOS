@@ -7,6 +7,7 @@
 
 import Foundation
 
+// Unsplash 관련 정보 
 struct UnsplashPlistModel: Codable {
     
     let unsplash: String

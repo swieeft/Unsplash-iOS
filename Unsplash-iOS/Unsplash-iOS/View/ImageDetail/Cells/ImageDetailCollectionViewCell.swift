@@ -7,13 +7,17 @@
 
 import UIKit
 
+// MARK: - ImageDetailCollectionViewCellDelegate
 protocol ImageDetailCollectionViewCellDelegate: class {
     func backgroundAlpha(alpha: CGFloat)
     func dismissImageDetail()
 }
 
+// MARK: - ImageDetailCollectionViewCell
 class ImageDetailCollectionViewCell: UICollectionViewCell {
 
+    // MARK: - UI
+    // 이미지 Zoom을 위한 스크롤 뷰
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -39,7 +43,7 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         imageView.addGestureRecognizer(panGesture)
         self.panGesture = panGesture
         
-        // 이미지 뷰 더블 탭 제스처
+        // 이미지 뷰 더블 탭 제스처 (Zoom)
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(zoomImageAction(_:)))
         doubleTapGesture.numberOfTapsRequired = 2
         imageView.addGestureRecognizer(doubleTapGesture)
@@ -47,8 +51,8 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
     
+    // 상세 이미지 다운로드 진행률을 표시할 뷰
     lazy var progressView: UIView = {
-//        let view = UIView(frame: CGRect(x: (SizeEnum.screenWidth.value / 2) - 30, y: (SizeEnum.screenHeight.value / 2) - 30, width: 60, height: 60))
         let view = UIView(frame: CGRect(x: 0, y: (SizeEnum.screenHeight.value - SizeEnum.bottomMargin.value - 60), width: 60, height: 60))
         view.backgroundColor = .clear//UIColor.darkGray.withAlphaComponent(0.6)
         view.layer.cornerRadius = 12
@@ -57,6 +61,7 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         return view
     }()
     
+    // 상세 이미지 다운로드 진행률을 표시할 라벨 (백분률 표시)
     lazy var progressLabel: UILabel = {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 60, height: 60))
         label.textAlignment = .center
@@ -66,6 +71,7 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // 상세 이미지 다운로드 진행률을 표시할 Layer (원형으로 진행률 표시)
     lazy var progressLayer: CAShapeLayer = {
         let path = UIBezierPath(arcCenter: CGPoint(x: 30, y: 30), radius: 20, startAngle: 0, endAngle: 2 * .pi, clockwise: true)
         
@@ -80,10 +86,11 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         return layer
     }()
     
-    private var panGesture: UIPanGestureRecognizer?
+    private var panGesture: UIPanGestureRecognizer? // 이미지 뷰 이동 제스처
     
     var delegate: ImageDetailCollectionViewCellDelegate?
     
+    // MARK: - Function
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -109,6 +116,7 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         progressLayer.strokeEnd = 0
     }
     
+    // 이미지 이동
     @objc private func moveImageAction(_ sender: UIPanGestureRecognizer) {
         guard let imageView = sender.view as? UIImageView else {
             return
@@ -125,10 +133,12 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         case .changed:
             imageView.transform = CGAffineTransform(translationX: 0, y: translation.y)
             
+            // 아래로 내릴때만 배경색 Alpha 변경
             if translation.y > 0 {
                 delegate?.backgroundAlpha(alpha: alpha)
             }
         case .ended:
+            // 이미지 드래그 종료 시 이미지 위치에 따라 원래 위치로 돌리거나, 상세화면 종료
             if alpha < 0.7 && translation.y > 0 {
                 delegate?.dismissImageDetail()
             } else {
@@ -151,6 +161,7 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    // 상세 이미지 다운로드 진행률 표시
     func updateProgress(progress: CGFloat) {
         progressView.isHidden = false
         
@@ -167,6 +178,7 @@ class ImageDetailCollectionViewCell: UICollectionViewCell {
     }
 }
 
+// MARK: - UIScrollViewDelegate
 extension ImageDetailCollectionViewCell: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return photoImageView

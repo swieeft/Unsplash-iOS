@@ -9,19 +9,24 @@
 
 import UIKit
 
+// MARK: - PanDirection Enum
 enum PanDirection {
     case vertical
     case horizontal
 }
 
+// MARK: - PanDirectionGestureRecognizer
 class PanDirectionGestureRecognizer: UIPanGestureRecognizer {
+    // MARK: - Property
     let direction: PanDirection
     
+    // MARK: - Initialization
     init(direction: PanDirection, target: AnyObject, action: Selector) {
         self.direction = direction
         super.init(target: target, action: action)
     }
     
+    // MARK: - Function
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
         super.touchesMoved(touches, with: event)
         

@@ -7,24 +7,32 @@
 
 import UIKit
 
+// 컬렉션 리스트 셀
+
+// MARK: - CollectionTableViewCellDelegate
 protocol CollectionTableViewCellDelegate: class {
     func collectionError(error: String)
     func selectCollection(id: String, title: String)
 }
 
+// MARK: - CollectionTableViewCell
 class CollectionTableViewCell: UITableViewCell {
     
+    // MARK: - UI
     @IBOutlet weak var collectionView: UICollectionView!
     
+    // MARK: - Property
     private var currentIndex: CGFloat = 0
     
     private let collectionListController = CollectionListController()
     
     weak var delegate: CollectionTableViewCellDelegate?
     
+    // MARK: - Function
     override func awakeFromNib() {
         super.awakeFromNib()
 
+        // Collection View의 Cell layout 형태 및 Collection View 설정
         let cellWidth = (SizeEnum.screenWidth.value * 0.9)
         let cellHeight = SizeEnum.screenWidth.value * 0.36
         
@@ -46,6 +54,7 @@ class CollectionTableViewCell: UITableViewCell {
     }
 
     func setCollection() {
+        // 컬렉션 리스트 데이터 를 가져옴
         collectionListController.firstPage {
             self.collectionView.reloadData()
         } failure: { error in
@@ -60,6 +69,7 @@ class CollectionTableViewCell: UITableViewCell {
     }
 }
 
+// MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionListController.collectionCount
@@ -114,6 +124,7 @@ extension CollectionTableViewCell: UICollectionViewDelegate, UICollectionViewDat
     }
 }
 
+// MARK: - UICollectionViewDataSourcePrefetching
 extension CollectionTableViewCell: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
@@ -128,10 +139,12 @@ extension CollectionTableViewCell: UICollectionViewDataSourcePrefetching {
     }
 }
 
+// MARK: - UIScrollViewDelegate
 extension CollectionTableViewCell:  UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetX = scrollView.contentOffset.x
         
+        // 페이징
         if offsetX > (scrollView.contentSize.width * 0.7) {
             collectionListController.nextPage {
                 self.collectionView.reloadData()
@@ -142,6 +155,7 @@ extension CollectionTableViewCell:  UIScrollViewDelegate {
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        // 컬렉션 뷰 스크롤 후 멈출 때 셀이 화면의 정 가운데로 오도록 설정
         let layout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
 

@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - UserDefaultKey
 enum UserDefaultKey {
     case recentKeywords
     
@@ -18,8 +19,10 @@ enum UserDefaultKey {
     }
 }
 
+// MARK: - UserDefaultWrapper
 @propertyWrapper
 struct UserDefaultWrapper<T> {
+    // MARK: - Property
     var key: String
     
     var wrappedValue: T? {
@@ -36,6 +39,7 @@ struct UserDefaultWrapper<T> {
         }
     }
     
+    // MARK: - Initialization
     init(wrappedValue: T?, key: String) {
         self.key = key
         self.wrappedValue = wrappedValue

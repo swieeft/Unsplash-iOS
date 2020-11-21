@@ -7,16 +7,20 @@
 
 import UIKit
 
+// MARK: - ImageDetailViewControllerDelegate
 protocol ImageDetailViewControllerDelegate: class {
     func changeImage(index: Int)
 }
 
+// MARK: - ImageDetailViewController
 class ImageDetailViewController: UIViewController {
 
+    // MARK: - UI
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var nameLabel: UILabel!
     
+    // MARK: - Property
     var imageDetailController: ImageDetailController!
     
     weak var delegate: ImageDetailViewControllerDelegate?
@@ -27,6 +31,7 @@ class ImageDetailViewController: UIViewController {
         }
     }
     
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,11 +54,13 @@ class ImageDetailViewController: UIViewController {
         super.viewDidAppear(animated)
     }
     
+    // MARK: - Function
     @IBAction func closeButtonAction(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 }
 
+// MARK: - UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 extension ImageDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageDetailController.photoCount
@@ -109,6 +116,7 @@ extension ImageDetailViewController: UICollectionViewDataSource, UICollectionVie
     }
 }
 
+// MARK: - UICollectionViewDataSourcePrefetching
 extension ImageDetailViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
         indexPaths.forEach { indexPath in
@@ -123,6 +131,7 @@ extension ImageDetailViewController: UICollectionViewDataSourcePrefetching {
     }
 }
 
+// MARK: - UIScrollViewDelegate
 extension ImageDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let index = Int(round(scrollView.contentOffset.x / scrollView.frame.width))
@@ -131,17 +140,22 @@ extension ImageDetailViewController: UIScrollViewDelegate {
     }
 }
 
+// MARK: - ImageDetailCollectionViewCellDelegate
 extension ImageDetailViewController: ImageDetailCollectionViewCellDelegate {
+    // 이미지 이동 시 배경색 Alpha 조정
     func backgroundAlpha(alpha: CGFloat) {
         backgroundView.alpha = alpha
     }
     
+    // 상세화면 종료
     func dismissImageDetail() {
         self.dismiss(animated: true, completion: nil)
     }
 }
 
+// MARK: - ImageDetailControllerDelegate
 extension ImageDetailViewController: ImageDetailControllerDelegate {
+    // 부모 이미지 리스트에 데이터 업데이트 시 상세화면의 데이터도 다시 reload
     func updatePhotos() {
         self.collectionView.reloadData()
     }

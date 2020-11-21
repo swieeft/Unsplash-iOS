@@ -7,9 +7,13 @@
 
 import UIKit
 
-class MainListTitleTableViewCell: UITableViewCell {
+// 메인 화면 리스트의 타이틀 셀
 
+class MainListTitleTableViewCell: UITableViewCell {
+    // MARK: - UI
     @IBOutlet weak var titleLabel: UILabel!
+    
+    // MARK: - Function
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -7,21 +7,27 @@
 
 import UIKit
 
+// MARK: - SearchTitleTableViewCellDelegate
 protocol SearchTitleTableViewCellDelegate: class {
     func recentClear()
 }
 
+// MARK: - SearchTitleTableViewCell
 class SearchTitleTableViewCell: UITableViewCell {
+    // MARK: - Title Enum
     enum Title: String {
         case recent = "Recent"
         case trending = "Trending"
     }
     
+    // MARK: - UI
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var clearButton: UIButton!
     
+    // MARK: - Property
     weak var delegate: SearchTitleTableViewCellDelegate?
     
+    // MARK: - Function
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

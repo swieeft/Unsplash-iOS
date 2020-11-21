@@ -7,8 +7,10 @@
 
 import Foundation
 
+// 컬렉션 리스트 모델
 typealias CollectionModel = [CollectionItem]
 
+// 컬렉션 모델
 struct CollectionItem: Codable {
     let id: String
     let title: String
