@@ -343,7 +343,7 @@ extension ViewController: UIScrollViewDelegate {
         }
         
         // 테이블 뷰 페이징 처리
-        if offsetY > (scrollView.contentSize.height - scrollView.frame.height) {
+        if offsetY > (scrollView.contentSize.height / 2) { //- scrollView.frame.height) {
             mainController.nextPage {
                 self.tableView.reloadData()
             } failure: { error in
