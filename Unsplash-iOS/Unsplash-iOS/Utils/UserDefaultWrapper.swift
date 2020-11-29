@@ -27,15 +27,10 @@ struct UserDefaultWrapper<T> {
     
     var wrappedValue: T? {
         get {
-            guard let groupUserDefaults = UserDefaults(suiteName: "group.inviteshealthcare.TDNA-iOS.com") else{
-                return UserDefaults.standard.object(forKey: key) as? T
-            }
-            return groupUserDefaults.object(forKey: key) as? T
+            return UserDefaults.standard.object(forKey: key) as? T
         }
         set {
-            if let groupUserDefaults = UserDefaults(suiteName: "group.inviteshealthcare.TDNA-iOS.com") {
-                return groupUserDefaults.set(newValue, forKey: key)
-            }
+            UserDefaults.standard.setValue(newValue, forKey: key)
         }
     }
     
