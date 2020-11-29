@@ -386,8 +386,6 @@ extension ViewController: CollectionTableViewCellDelegate {
 // MARK: - ImageDetailViewControllerDelegate, SearchViewControllerDelegate
 extension ViewController: ImageDetailViewControllerDelegate, SearchViewControllerDelegate {
     func searchCancel() {
-        self.tableView.reloadData()
-        
         guard let offsetY = self.searchViewTapCurrentOffset else {
             return
         }
@@ -397,6 +395,7 @@ extension ViewController: ImageDetailViewControllerDelegate, SearchViewControlle
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.searchViewTapCurrentOffset = nil
+            self.tableView.reloadData()
         }
     }
     

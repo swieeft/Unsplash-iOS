@@ -125,7 +125,6 @@ extension CollectionViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
 
-        print(offsetY)
         // 테이블 뷰 페이징 처리
         if offsetY > (scrollView.contentSize.height / 2) {
             collectionController.nextPage {
