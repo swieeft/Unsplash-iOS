@@ -86,6 +86,19 @@ class ImageCache {
         }
         
         imageCache.removeObject(forKey: url as AnyObject)
+        
+        // 디스크 캐시에 저장 된 이미지 삭제
+        guard let filePath = diskCacheFilePath(url: url) else {
+            return
+        }
+        
+        if !fileManager.fileExists(atPath: filePath.path) {
+            do {
+                try fileManager.removeItem(atPath: filePath.path)
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        }
     }
     
     func removeAllImages() {
