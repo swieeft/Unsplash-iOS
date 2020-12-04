@@ -8,12 +8,19 @@
 import UIKit
 
 // MARK: - CollectionListController
-class CollectionListController {
+class CollectionListController: ImageController {
     // MARK: - Property
     let apiManager = APIManager()
     
     // 컬렉션 리스트 데이터
-    var collections: CollectionModel?
+    var collections: CollectionModel? {
+        didSet {
+            let aa = collections?.compactMap { $0.coverPhoto }
+            photos = aa
+        }
+    }
+    
+    var photos: PhotosModel?
     
     // 컬렉션 리스트 개수
     var collectionCount: Int {
@@ -21,14 +28,14 @@ class CollectionListController {
     }
     
     // 이미지 다운로드 OperationQueue
-    private lazy var imageLoadQueue: OperationQueue = {
+    lazy var imageLoadQueue: OperationQueue = {
         let queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 100
+        queue.maxConcurrentOperationCount = OperationQueue.defaultMaxConcurrentOperationCount
         return queue
     }()
     
     // 이미지 리스트 다운로드 Operation
-    private var imageLoadOperations: [Int: ImageLoadOperation] = [:]
+    var imageLoadOperations: [Int: ImageLoadOperation] = [:]
     
     // 페이징 데이터
     private var isPaging: Bool = false
@@ -97,15 +104,6 @@ class CollectionListController {
         return collection.title
     }
     
-    // 사진 가져오기 전 표시 할 임시 배경색
-    func cellBackgroundColor(index: Int) -> UIColor {
-        guard let collection = collectionData(index: index), let photo = collection.coverPhoto, let color = UIColor(hexaRGB: photo.color) else {
-            return .white
-        }
-        
-        return color
-    }
-    
     // 컬렉션 아이디 (컬렉션 상세 리스트 API 호출 시 필요)
     func collectionId(index: Int) -> String {
         guard let collection = collectionData(index: index) else {
@@ -113,61 +111,5 @@ class CollectionListController {
         }
         
         return collection.id
-    }
-    
-    // 특정 인덱스의 이미지
-    func image(index: Int) -> UIImage? {
-        guard let url = downloadURL(index: index) else {
-            return nil
-        }
-        
-        if let image = ImageCache.shared[url] {
-            return image
-        } else {
-            return nil
-        }
-    }
-    
-    // 이미지 다운로드
-    func downloadImage(index: Int, completion: ((UIImage) -> ())?) {
-        if imageLoadOperations[index] != nil {
-            return
-        }
-        
-        guard let url = downloadURL(index: index) else {
-            return
-        }
-        
-        let imageLoadOperation = ImageLoadOperation(url: url)
-        imageLoadOperation.completion = { image in
-            completion?(image)
-        }
-        
-        imageLoadQueue.addOperation(imageLoadOperation)
-        imageLoadOperations[index] = imageLoadOperation
-    }
-    
-    // 이미지 다운로드 취소
-    func cancelDownloadImage(index: Int) {
-        guard let imageLoadOperation = imageLoadOperations[index] else {
-            return
-        }
-        
-        imageLoadOperation.cancel()
-        removeImageLoadOperation(index: index)
-    }
-    
-    // 이미지 다운로드 Operation 삭제
-    func removeImageLoadOperation(index: Int) {
-        imageLoadOperations.removeValue(forKey: index)
-    }
-    
-    // 다운르도 할 이미지의 url 주소
-    private func downloadURL(index: Int) -> String? {
-        guard let collection = collectionData(index: index), let photo = collection.coverPhoto else {
-            return nil
-        }
-        
-        return photo.urls.small
     }
 }
