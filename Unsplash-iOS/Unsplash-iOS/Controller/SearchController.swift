@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - SearchController
-class SearchController: ImageController {
+class SearchController: ImageProvider {
     // MARK: - Property
     // 최근 검색 기록
     @UserDefaultWrapper(key: UserDefaultKey.recentKeywords.key) var recentKeywords: [String]?

@@ -13,7 +13,7 @@ protocol ImageDetailControllerDelegate: class {
 }
 
 // MARK: - ImageDetailController
-class ImageDetailController: ImageController {
+class ImageDetailController: ImageProvider {
     // MARK: - Property
     let apiManager = APIManager()
     

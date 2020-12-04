@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - CollectionListController
-class CollectionListController: ImageController {
+class CollectionListController: ImageProvider {
     // MARK: - Property
     let apiManager = APIManager()
     

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ImageController : class {
+protocol ImageProvider: class {
     var photos: PhotosModel? { get set }
     var imageLoadQueue: OperationQueue { get set }
     var imageLoadOperations: [Int: ImageLoadOperation] { get set }
@@ -23,7 +23,7 @@ protocol ImageController : class {
     func downloadURL(index: Int) -> String?
 }
 
-extension ImageController {
+extension ImageProvider {
     // 특정 인덱스의 이미지 데이터
     func photoData(index: Int) -> Photo? {
         guard let photos = self.photos, index >= 0, index < photos.count else {

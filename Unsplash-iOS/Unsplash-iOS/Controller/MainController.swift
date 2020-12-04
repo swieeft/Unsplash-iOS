@@ -17,7 +17,7 @@ protocol MainControllerDelegate: class {
 }
 
 // MARK: - MainController
-class MainController: ImageController {
+class MainController: ImageProvider {
     // MARK: - Property
     let apiManager = APIManager()
     
