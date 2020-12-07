@@ -14,7 +14,6 @@
 		B514126325662A9C005205D0 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514126225662A9C005205D0 /* UIColorExtension.swift */; };
 		B514126C256631BC005205D0 /* ImageLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514126B256631BC005205D0 /* ImageLoadOperation.swift */; };
 		B51412752566384A005205D0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51412742566384A005205D0 /* ImageCache.swift */; };
-		B514127E25663981005205D0 /* APIEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514127D25663981005205D0 /* APIEnums.swift */; };
 		B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5141288256639CD005205D0 /* ResponseSuccessModel.swift */; };
 		B5389527256661D800B68A41 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5389526256661D800B68A41 /* ImageDetailViewController.swift */; };
 		B538952F256661DF00B68A41 /* ImageDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B538952E256661DF00B68A41 /* ImageDetailViewController.storyboard */; };
@@ -92,7 +91,6 @@
 		B514126225662A9C005205D0 /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		B514126B256631BC005205D0 /* ImageLoadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadOperation.swift; sourceTree = "<group>"; };
 		B51412742566384A005205D0 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
-		B514127D25663981005205D0 /* APIEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnums.swift; sourceTree = "<group>"; };
 		B5141288256639CD005205D0 /* ResponseSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSuccessModel.swift; sourceTree = "<group>"; };
 		B5389526256661D800B68A41 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		B538952E256661DF00B68A41 /* ImageDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageDetailViewController.storyboard; sourceTree = "<group>"; };
@@ -414,7 +412,6 @@
 		B5F4885A25693CAA00220405 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				B514127D25663981005205D0 /* APIEnums.swift */,
 				B538954E256748BD00B68A41 /* SizeEnum.swift */,
 				B538955A25674A5600B68A41 /* CellsEnum.swift */,
 				B53895692567503F00B68A41 /* ViewControllersEnum.swift */,
@@ -578,7 +575,6 @@
 				B5A53D762569523C002CB417 /* AppInfoViewController.swift in Sources */,
 				B5A53D6425694D2A002CB417 /* MyViewController.swift in Sources */,
 				B538958E2567997800B68A41 /* SearchKeywordTableViewCell.swift in Sources */,
-				B514127E25663981005205D0 /* APIEnums.swift in Sources */,
 				B538955B25674A5600B68A41 /* CellsEnum.swift in Sources */,
 				B51412752566384A005205D0 /* ImageCache.swift in Sources */,
 				B514124725660657005205D0 /* ImageTableViewCell.swift in Sources */,

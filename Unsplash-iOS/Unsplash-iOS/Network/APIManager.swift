@@ -98,7 +98,7 @@ struct APIManager {
     }
     
     // API에서 받아온 JSON 데이터 파싱 및 에러처리
-    private func getResult<T: Codable>(type: T.Type, result: APIResponce) -> APIResult<T> {
+    private func getResult<T: Codable>(type: T.Type, result: APIService.Responce) -> APIService.Result<T> {
         switch result {
         case let .success(response):
                 do {

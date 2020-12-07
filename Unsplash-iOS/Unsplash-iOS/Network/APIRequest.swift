@@ -14,7 +14,7 @@ class APIRequest {
     private var observation: NSKeyValueObservation? // 이미지 다운로드 시 진행상태 표시
     
     // MARK: - Function
-    func request(target: APIService, completion: @escaping (APIResponce) -> ()) {
+    func request(target: APIService, completion: @escaping (APIService.Responce) -> ()) {
         switch target.request {
         case .json:
             requestJson(target: target, completion: completion)
@@ -23,7 +23,7 @@ class APIRequest {
         }
     }
     
-    private func requestJson(target: APIService, completion: @escaping (APIResponce) -> ()) {
+    private func requestJson(target: APIService, completion: @escaping (APIService.Responce) -> ()) {
         let url = target.baseURL.appendingPathComponent(target.path)
         
         let json = try? JSONSerialization.data(withJSONObject: target.parameters, options: .prettyPrinted)
@@ -75,7 +75,7 @@ class APIRequest {
         task?.resume()
     }
     
-    private func requestQuery(target: APIService, completion: @escaping (APIResponce) -> ()) {
+    private func requestQuery(target: APIService, completion: @escaping (APIService.Responce) -> ()) {
         var urlComponents = URLComponents(url: target.baseURL.appendingPathComponent(target.path), resolvingAgainstBaseURL: true)
         
         var queryItems: [URLQueryItem] = []
@@ -148,7 +148,7 @@ class APIRequest {
         }
         
         var request = URLRequest(url: url)
-        request.httpMethod = APIMethod.get.rawValue
+        request.httpMethod = APIService.Method.get.rawValue
         
         task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             guard

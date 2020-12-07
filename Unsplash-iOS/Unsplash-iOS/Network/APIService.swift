@@ -35,14 +35,14 @@ extension APIService {
         }
     }
     
-    var method: APIMethod {
+    var method: Method {
         switch self {
         case .header, .list, .search, .collectionList, .collection:
             return .get
         }
     }
     
-    var request: APIRequestType {
+    var request: RequestType {
         switch self {
         case .header, .list, .search, .collectionList, .collection:
             return .query
@@ -67,7 +67,74 @@ extension APIService {
     var headers: [String : String]? {
         switch self {
         case .header, .list, .search, .collectionList, .collection:
-            return APIHeader.get(.authorization, .contentType)
+            return Header.get(.authorization, .contentType)
+        }
+    }
+}
+
+extension APIService {
+    enum Method: String {
+        case get
+        case post
+        case put
+        case delete
+    }
+
+    enum RequestType {
+        case json
+        case query
+    }
+
+    enum Responce {
+        case success(response: ResponseSuccessModel)
+        case failure(error: String)
+    }
+
+    enum Result<T: Codable> {
+        case success(data: T?, hasNextPage: Bool)
+        case failure(error: String)
+    }
+
+    enum Header {
+        case authorization
+        case contentType
+        
+        var key: String {
+            switch self {
+            case .authorization:
+                return "Authorization"
+            case .contentType:
+                return "Content-Type"
+            }
+        }
+        
+        var value: String {
+            switch self {
+            case .authorization:
+                guard let path = Bundle.main.path(forResource: "unsplash", ofType: "plist"),
+                      let dict = NSDictionary(contentsOfFile: path),
+                      let key = dict["unsplash"] as? String else {
+                    return ""
+                }
+
+                return "Client-ID \(key)"
+            case .contentType:
+                return "application/json"
+            }
+        }
+        
+        static func get(_ headers: Header...) -> [String: String]? {
+            if headers.count == 0 {
+                return nil
+            }
+            
+            var header: [String: String] = [:]
+            
+            headers.forEach { h in
+                header[h.key] = h.value
+            }
+            
+            return header
         }
     }
 }
