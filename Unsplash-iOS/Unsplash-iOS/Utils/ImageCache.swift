@@ -28,12 +28,6 @@ class ImageCache {
     
     // MARK: - Function
     func image(url: String) -> UIImage? {
-        lock.lock()
-        
-        defer {
-            lock.unlock()
-        }
-        
         if let image = imageCache.object(forKey: url as AnyObject) as? UIImage {
             // 메모리 캐시에서 이미지를 가져옴
             return image
@@ -58,7 +52,7 @@ class ImageCache {
         }
         
         lock.lock()
-        
+
         defer {
             lock.unlock()
         }
@@ -78,7 +72,7 @@ class ImageCache {
     
     func removeImage(url: String) {
         lock.lock()
-        
+
         defer {
             lock.unlock()
         }
