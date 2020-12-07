@@ -9,6 +9,7 @@ import UIKit
 
 protocol ImageProvider: class {
     var photos: PhotosModel? { get set }
+    var photoCount: Int { get }
     var imageLoadQueue: OperationQueue { get set }
     var imageLoadOperations: [Int: ImageLoadOperation] { get set }
     
@@ -24,6 +25,10 @@ protocol ImageProvider: class {
 }
 
 extension ImageProvider {
+    var photoCount: Int {
+        return photos?.count ?? 0
+    }
+    
     // 특정 인덱스의 이미지 데이터
     func photoData(index: Int) -> Photo? {
         guard let photos = self.photos, index >= 0, index < photos.count else {

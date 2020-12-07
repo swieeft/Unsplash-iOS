@@ -36,10 +36,6 @@ class MainController: ImageProvider {
         }
     }
     
-    var photoCount: Int {
-        return photos?.count ?? 0
-    }
-    
     // 이미지 리스트 다운로드 Operation
     var imageLoadOperations: [Int: ImageLoadOperation] = [:]
 

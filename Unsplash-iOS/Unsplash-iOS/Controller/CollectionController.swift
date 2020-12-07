@@ -20,10 +20,6 @@ class CollectionController: ImageProvider {
         }
     }
     
-    var photoCount: Int {
-        return photos?.count ?? 0
-    }
-    
     // 이미지 다운로드 OperationQueue
     lazy var imageLoadQueue: OperationQueue = {
         let queue = OperationQueue()

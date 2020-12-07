@@ -24,11 +24,6 @@ class ImageDetailController: ImageProvider {
         }
     }
     
-    // 이미지 리스트 데이터
-    var photoCount: Int {
-        return photos?.count ?? 0
-    }
-    
     // 이미지 다운로드 OperationQueue
     lazy var imageLoadQueue: OperationQueue = {
        let queue = OperationQueue()

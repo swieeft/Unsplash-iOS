@@ -28,7 +28,7 @@ class SearchController: ImageProvider {
     // 검색 키워드 표시할 셀의 개수
     var keywordCellCount: Int {
         if isSearch {
-            return photos?.count ?? 0
+            return photoCount
         } else {
             let recentKeywordsCount = recentKeywords?.count ?? 0
             return trendingKeyword.count + recentKeywordsCount + (recentKeywordsCount == 0 ? 1 : 2)
