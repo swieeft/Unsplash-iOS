@@ -16,7 +16,6 @@
 		B51412752566384A005205D0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51412742566384A005205D0 /* ImageCache.swift */; };
 		B514127E25663981005205D0 /* APIEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514127D25663981005205D0 /* APIEnums.swift */; };
 		B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5141288256639CD005205D0 /* ResponseSuccessModel.swift */; };
-		B5389518256656E100B68A41 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5389517256656E100B68A41 /* UIImageExtension.swift */; };
 		B5389527256661D800B68A41 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5389526256661D800B68A41 /* ImageDetailViewController.swift */; };
 		B538952F256661DF00B68A41 /* ImageDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B538952E256661DF00B68A41 /* ImageDetailViewController.storyboard */; };
 		B53895362566636600B68A41 /* ImageDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53895342566636600B68A41 /* ImageDetailCollectionViewCell.swift */; };
@@ -95,7 +94,6 @@
 		B51412742566384A005205D0 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		B514127D25663981005205D0 /* APIEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEnums.swift; sourceTree = "<group>"; };
 		B5141288256639CD005205D0 /* ResponseSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSuccessModel.swift; sourceTree = "<group>"; };
-		B5389517256656E100B68A41 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
 		B5389526256661D800B68A41 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		B538952E256661DF00B68A41 /* ImageDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageDetailViewController.storyboard; sourceTree = "<group>"; };
 		B53895342566636600B68A41 /* ImageDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				B5F4880A2568B68400220405 /* UIViewExtension.swift */,
-				B5389517256656E100B68A41 /* UIImageExtension.swift */,
 				B514125C2566274F005205D0 /* UIViewControllerExtension.swift */,
 				B514126225662A9C005205D0 /* UIColorExtension.swift */,
 			);
@@ -608,7 +605,6 @@
 				B5389527256661D800B68A41 /* ImageDetailViewController.swift in Sources */,
 				B5F488102568BFD300220405 /* MainLoadingView.swift in Sources */,
 				B5CF50DC25651E7300026AB9 /* APIManager.swift in Sources */,
-				B5389518256656E100B68A41 /* UIImageExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

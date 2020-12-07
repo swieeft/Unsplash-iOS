@@ -57,8 +57,6 @@ class ImageCache {
             return
         }
         
-        let decodedImage = image.decodedImage()
-        
         lock.lock()
         
         defer {
@@ -66,7 +64,7 @@ class ImageCache {
         }
         
         // 메모리 캐시에 저장
-        imageCache.setObject(decodedImage, forKey: url as AnyObject)
+        imageCache.setObject(image, forKey: url as AnyObject)
 
         // 디스크 캐시에 저장
         guard let filePath = diskCacheFilePath(url: url) else {
