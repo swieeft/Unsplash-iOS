@@ -6,13 +6,13 @@
 
 1. Go to the link **[Unsplash Developers](https://unsplash.com/developers)**
 
-2. SignIn or Register as a developer
+2. Sign In or Register as a developer
 
 3. Go to **Your apps** menu
 
 4. Register a new application
 
-5. Go to the Keys item of the registered app
+5. Go to the **Keys** item of the registered app
 
 6. Copy Access Key
 
