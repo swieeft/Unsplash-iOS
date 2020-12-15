@@ -7,13 +7,8 @@
 
 import UIKit
 
-// MARK: - SearchViewControllerDelegate
-protocol SearchViewControllerDelegate: class {
-    func searchCancel()
-}
-
 // MARK: - SearchViewController
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, Storyboarded {
 
     // MARK: - UI
     @IBOutlet weak var searchView: UIView!
@@ -25,9 +20,9 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint!
     
     // MARK: - Property
-    let searchController = SearchController()
+    weak var coordinator: SearchCoordinator?
     
-    weak var delegate: SearchViewControllerDelegate?
+    let searchController = SearchController()
     
     var isKeyboardShow: Bool = false
     
@@ -51,6 +46,8 @@ class SearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.isHidden = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -112,8 +109,7 @@ class SearchViewController: UIViewController {
             self.cancelButton.isHidden = true
             self.view.layoutIfNeeded()
         } completion: { _ in
-            self.delegate?.searchCancel()
-            self.dismiss(animated: false, completion: nil)
+            self.coordinator?.dismissSearch()
         }
     }
     
@@ -285,15 +281,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         if cell is ImageTableViewCell {
-            guard let vc = ViewControllersEnum.imageDetail.viewController as? ImageDetailViewController else {
-                return
-            }
-            
-            vc.delegate = self
-            vc.currentIndex = indexPath.row
-            vc.imageDetailController = ImageDetailController(photos: searchController.photos)
-            
-            self.present(vc, animated: true, completion: nil)
+            coordinator?.showDetail(delegate: self, currentIndex: indexPath.row, photos: searchController.photos)
         } else if let keywordCell = cell as? SearchKeywordTableViewCell {
             if let keyword = keywordCell.keywordLabel.text {
                 searchTextField.text = keyword

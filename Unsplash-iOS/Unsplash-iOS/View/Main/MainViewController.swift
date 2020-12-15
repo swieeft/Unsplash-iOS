@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Unsplash-iOS
 //
 //  Created by Park GilNam on 2020/11/18.
@@ -9,7 +9,7 @@ import UIKit
 
 // 메인화면
 
-class MainViewController: UIViewController, Storyboarded{
+class MainViewController: UIViewController, Storyboarded {
     // MARK: - HeaderSize Enum
     // 헤더뷰의 사이즈
     enum HeaderSize {
@@ -144,11 +144,12 @@ class MainViewController: UIViewController, Storyboarded{
         
         // 헤더 뷰가 최소 사이즈일 경우에는 검색 뷰컨을 바로 호출하고, 그렇지 않으면 최소 사이즈로 변경 후 검색 뷰컨 호출
         if tableView.contentOffset.y > topOffsetY {
-            guard let vc = ViewControllersEnum.search.viewController as? SearchViewController else {
-                return
-            }
-            
-            self.present(vc, animated: false, completion: nil)
+//            guard let vc = ViewControllersEnum.search.viewController as? SearchViewController else {
+//                return
+//            }
+//
+//            self.present(vc, animated: false, completion: nil)
+            coordinator?.showSearch()
         } else {
             searchViewTapCurrentOffset = self.tableView.contentOffset.y
             
@@ -156,31 +157,24 @@ class MainViewController: UIViewController, Storyboarded{
                 self.tableView.contentOffset.y = topOffsetY
                 self.view.layoutIfNeeded()
             } completion: { _ in
-                guard let vc = ViewControllersEnum.search.viewController as? SearchViewController else {
-                    return
-                }
-                
-                vc.delegate = self
-                
-                self.present(vc, animated: false, completion: nil)
+                self.coordinator?.showSearch()
+//                guard let vc = ViewControllersEnum.search.viewController as? SearchViewController else {
+//                    return
+//                }
+//
+//                vc.delegate = self
+//
+//                self.present(vc, animated: false, completion: nil)
             }
         }
     }
     
     @IBAction func appInfoButtonAction(_ sender: Any) {
-        guard let vc = ViewControllersEnum.appInfo.viewController as? AppInfoViewController else {
-            return
-        }
-        
-        self.present(vc, animated: true, completion: nil)
+        coordinator?.showAppInfo()
     }
     
     @IBAction func myButtonAction(_ sender: Any) {
-        guard let vc = ViewControllersEnum.my.viewController as? MyViewController else {
-            return
-        }
-        
-        self.present(vc, animated: true, completion: nil)
+        coordinator?.showMy()
     }
 }
 
@@ -284,15 +278,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         // 이미지 상세화면 보기
-        guard let vc = ViewControllersEnum.imageDetail.viewController as? ImageDetailViewController else {
-            return
-        }
-        
-        vc.delegate = self
-        vc.currentIndex = getImageIndex(indexPath)
-        vc.imageDetailController = ImageDetailController(photos: mainController.photos)
-        
-        self.present(vc, animated: true, completion: nil)
+        coordinator?.showDetail(delegate: self, currentIndex: getImageIndex(indexPath), photos: mainController.photos)
     }
     
     // 실제 이미지 리스트의 index
@@ -371,13 +357,7 @@ extension MainViewController: MainControllerDelegate {
 // MARK: - CollectionTableViewCellDelegate
 extension MainViewController: CollectionTableViewCellDelegate {
     func selectCollection(id: String, title: String) {
-        guard let vc = ViewControllersEnum.collection.viewController as? CollectionViewController else {
-            return
-        }
-        
-        vc.collectionController = CollectionController(id: id, title: title)
-        
-        self.navigationController?.pushViewController(vc, animated: true)
+        coordinator?.pushCollection(id: id, title: title)
     }
     
     func collectionError(error: String) {
@@ -386,8 +366,18 @@ extension MainViewController: CollectionTableViewCellDelegate {
 }
 
 // MARK: - ImageDetailViewControllerDelegate, SearchViewControllerDelegate
-extension MainViewController: ImageDetailViewControllerDelegate, SearchViewControllerDelegate {
-    func searchCancel() {
+extension MainViewController: ImageDetailViewControllerDelegate {
+    func changeImage(index: Int) {
+        // 이미지 상세화면에서 이미지 좌/우 이동 시 해당 이미지에 맞춰서 메인 테이블 뷰의 셀 위치도 이동 시킴
+        let height = mainController.imageHeight(index: index)
+        
+        self.tableView.scrollToRow(at: IndexPath(row: index + 3, section: 0), at: .top, animated: false)
+        self.tableView.contentOffset.y += HeaderSize.max.height + SizeEnum.statusBarHeight.value - (SizeEnum.screenHeight.value / 2) + (height / 2)
+    }
+}
+
+extension MainViewController: MainCoordinatorDelegate {
+    func searchDismiss() {
         guard let offsetY = self.searchViewTapCurrentOffset else {
             return
         }
@@ -399,13 +389,5 @@ extension MainViewController: ImageDetailViewControllerDelegate, SearchViewContr
             self.searchViewTapCurrentOffset = nil
             self.tableView.reloadData()
         }
-    }
-    
-    func changeImage(index: Int) {
-        // 이미지 상세화면에서 이미지 좌/우 이동 시 해당 이미지에 맞춰서 메인 테이블 뷰의 셀 위치도 이동 시킴
-        let height = mainController.imageHeight(index: index)
-        
-        self.tableView.scrollToRow(at: IndexPath(row: index + 3, section: 0), at: .top, animated: false)
-        self.tableView.contentOffset.y += HeaderSize.max.height + SizeEnum.statusBarHeight.value - (SizeEnum.screenHeight.value / 2) + (height / 2)
     }
 }

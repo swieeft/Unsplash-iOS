@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MyViewController: UIViewController {
+class MyViewController: UIViewController, Storyboarded {
 
     // MARK: - UI
     @IBOutlet weak var backgroundView: UIView!

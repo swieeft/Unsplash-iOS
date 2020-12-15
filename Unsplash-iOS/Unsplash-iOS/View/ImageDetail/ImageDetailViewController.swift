@@ -13,7 +13,7 @@ protocol ImageDetailViewControllerDelegate: class {
 }
 
 // MARK: - ImageDetailViewController
-class ImageDetailViewController: UIViewController {
+class ImageDetailViewController: UIViewController, Storyboarded {
 
     // MARK: - UI
     @IBOutlet weak var backgroundView: UIView!

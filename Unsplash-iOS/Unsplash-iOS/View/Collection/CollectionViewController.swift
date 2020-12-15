@@ -7,11 +7,13 @@
 
 import UIKit
 
-class CollectionViewController: UIViewController {
+class CollectionViewController: UIViewController, Storyboarded {
     // MARK: - UI
     @IBOutlet weak var tableView: UITableView!
     
     // MARK: - Property
+    weak var coordinator: MainCoordinator?
+    
     var collectionController: CollectionController!
     
     // MARK: - Life cycle
@@ -93,15 +95,7 @@ extension CollectionViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let vc = ViewControllersEnum.imageDetail.viewController as? ImageDetailViewController else {
-            return
-        }
-        
-        vc.delegate = self
-        vc.currentIndex = indexPath.row
-        vc.imageDetailController = ImageDetailController(photos: collectionController.photos)
-        
-        self.present(vc, animated: true, completion: nil)
+        coordinator?.showDetail(delegate: self, currentIndex: indexPath.row, photos: collectionController.photos)
     }
 }
 

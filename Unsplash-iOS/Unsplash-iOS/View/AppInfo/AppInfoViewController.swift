@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AppInfoViewController: UIViewController {
+class AppInfoViewController: UIViewController, Storyboarded {
     // MARK : - UI
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var popupView: UIView!

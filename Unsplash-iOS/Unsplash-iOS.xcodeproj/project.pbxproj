@@ -15,6 +15,10 @@
 		B514126C256631BC005205D0 /* ImageLoadOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B514126B256631BC005205D0 /* ImageLoadOperation.swift */; };
 		B51412752566384A005205D0 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51412742566384A005205D0 /* ImageCache.swift */; };
 		B5141289256639CD005205D0 /* ResponseSuccessModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5141288256639CD005205D0 /* ResponseSuccessModel.swift */; };
+		B51ACB842588772100893A55 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51ACB832588772100893A55 /* Storyboarded.swift */; };
+		B51ACB8C2588774B00893A55 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51ACB8B2588774B00893A55 /* Coordinator.swift */; };
+		B51ACB912588776300893A55 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51ACB902588776300893A55 /* MainCoordinator.swift */; };
+		B51ACB9D25887C9600893A55 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51ACB9C25887C9600893A55 /* SearchCoordinator.swift */; };
 		B5389527256661D800B68A41 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5389526256661D800B68A41 /* ImageDetailViewController.swift */; };
 		B538952F256661DF00B68A41 /* ImageDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B538952E256661DF00B68A41 /* ImageDetailViewController.storyboard */; };
 		B53895362566636600B68A41 /* ImageDetailCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53895342566636600B68A41 /* ImageDetailCollectionViewCell.swift */; };
@@ -22,7 +26,6 @@
 		B538953F2566B01700B68A41 /* PanDirectionGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538953E2566B01700B68A41 /* PanDirectionGestureRecognizer.swift */; };
 		B538954F256748BD00B68A41 /* SizeEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538954E256748BD00B68A41 /* SizeEnum.swift */; };
 		B538955B25674A5600B68A41 /* CellsEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538955A25674A5600B68A41 /* CellsEnum.swift */; };
-		B538956A2567503F00B68A41 /* ViewControllersEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53895692567503F00B68A41 /* ViewControllersEnum.swift */; };
 		B538957325678A6200B68A41 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B538957225678A6200B68A41 /* SearchViewController.swift */; };
 		B538957B25678A6800B68A41 /* SearchViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B538957A25678A6800B68A41 /* SearchViewController.storyboard */; };
 		B5389583256798AB00B68A41 /* SearchTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5389581256798AB00B68A41 /* SearchTitleTableViewCell.swift */; };
@@ -35,8 +38,8 @@
 		B53895BB2567AC7700B68A41 /* UserDefaultWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53895BA2567AC7700B68A41 /* UserDefaultWrapper.swift */; };
 		B545569225790B1300EFF9DE /* ImageProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B545569125790B1300EFF9DE /* ImageProvider.swift */; };
 		B58CB62F2564A46500341A80 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB62E2564A46500341A80 /* AppDelegate.swift */; };
-		B58CB6332564A46500341A80 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB6322564A46500341A80 /* ViewController.swift */; };
-		B58CB6362564A46500341A80 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B58CB6342564A46500341A80 /* Main.storyboard */; };
+		B58CB6332564A46500341A80 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB6322564A46500341A80 /* MainViewController.swift */; };
+		B58CB6362564A46500341A80 /* MainViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B58CB6342564A46500341A80 /* MainViewController.storyboard */; };
 		B58CB6382564A46700341A80 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B58CB6372564A46700341A80 /* Assets.xcassets */; };
 		B58CB63B2564A46700341A80 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B58CB6392564A46700341A80 /* LaunchScreen.storyboard */; };
 		B58CB6462564A46700341A80 /* Unsplash_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58CB6452564A46700341A80 /* Unsplash_iOSTests.swift */; };
@@ -92,6 +95,10 @@
 		B514126B256631BC005205D0 /* ImageLoadOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoadOperation.swift; sourceTree = "<group>"; };
 		B51412742566384A005205D0 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		B5141288256639CD005205D0 /* ResponseSuccessModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseSuccessModel.swift; sourceTree = "<group>"; };
+		B51ACB832588772100893A55 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		B51ACB8B2588774B00893A55 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		B51ACB902588776300893A55 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		B51ACB9C25887C9600893A55 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		B5389526256661D800B68A41 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		B538952E256661DF00B68A41 /* ImageDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ImageDetailViewController.storyboard; sourceTree = "<group>"; };
 		B53895342566636600B68A41 /* ImageDetailCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -99,7 +106,6 @@
 		B538953E2566B01700B68A41 /* PanDirectionGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanDirectionGestureRecognizer.swift; sourceTree = "<group>"; };
 		B538954E256748BD00B68A41 /* SizeEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeEnum.swift; sourceTree = "<group>"; };
 		B538955A25674A5600B68A41 /* CellsEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellsEnum.swift; sourceTree = "<group>"; };
-		B53895692567503F00B68A41 /* ViewControllersEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllersEnum.swift; sourceTree = "<group>"; };
 		B538957225678A6200B68A41 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		B538957A25678A6800B68A41 /* SearchViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SearchViewController.storyboard; sourceTree = "<group>"; };
 		B5389581256798AB00B68A41 /* SearchTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTitleTableViewCell.swift; sourceTree = "<group>"; };
@@ -113,8 +119,8 @@
 		B545569125790B1300EFF9DE /* ImageProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProvider.swift; sourceTree = "<group>"; };
 		B58CB62B2564A46500341A80 /* Unsplash-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Unsplash-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B58CB62E2564A46500341A80 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B58CB6322564A46500341A80 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B58CB6352564A46500341A80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B58CB6322564A46500341A80 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		B58CB6352564A46500341A80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainViewController.storyboard; sourceTree = "<group>"; };
 		B58CB6372564A46700341A80 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B58CB63A2564A46700341A80 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B58CB63C2564A46700341A80 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -204,6 +210,24 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		B51ACB7D2588767600893A55 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				B51ACB8B2588774B00893A55 /* Coordinator.swift */,
+				B51ACB902588776300893A55 /* MainCoordinator.swift */,
+				B51ACB9C25887C9600893A55 /* SearchCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		B51ACB812588770800893A55 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				B51ACB832588772100893A55 /* Storyboarded.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		B538951C25665BB900B68A41 /* ImageDetail */ = {
 			isa = PBXGroup;
 			children = (
@@ -278,10 +302,12 @@
 				B5F4885A25693CAA00220405 /* Enums */,
 				B514126A256631B0005205D0 /* Utils */,
 				B514125B25662745005205D0 /* Extension */,
+				B51ACB812588770800893A55 /* Protocol */,
 				B5A34AA625650A7C006B5A08 /* Network */,
 				B5A34AAE25650B26006B5A08 /* Controller */,
 				B5A34AA725650A8D006B5A08 /* View */,
 				B5A34AA825650AAD006B5A08 /* Model */,
+				B51ACB7D2588767600893A55 /* Coordinator */,
 				B58CB62E2564A46500341A80 /* AppDelegate.swift */,
 				B58CB6372564A46700341A80 /* Assets.xcassets */,
 				B58CB6392564A46700341A80 /* LaunchScreen.storyboard */,
@@ -362,8 +388,8 @@
 			isa = PBXGroup;
 			children = (
 				B5F4881C2568F2AB00220405 /* Cells */,
-				B58CB6322564A46500341A80 /* ViewController.swift */,
-				B58CB6342564A46500341A80 /* Main.storyboard */,
+				B58CB6322564A46500341A80 /* MainViewController.swift */,
+				B58CB6342564A46500341A80 /* MainViewController.storyboard */,
 				B5F4880F2568BFD300220405 /* MainLoadingView.swift */,
 			);
 			path = Main;
@@ -414,7 +440,6 @@
 			children = (
 				B538954E256748BD00B68A41 /* SizeEnum.swift */,
 				B538955A25674A5600B68A41 /* CellsEnum.swift */,
-				B53895692567503F00B68A41 /* ViewControllersEnum.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -535,7 +560,7 @@
 				B5A34AA225650725006B5A08 /* unsplash.plist in Resources */,
 				B538952F256661DF00B68A41 /* ImageDetailViewController.storyboard in Resources */,
 				B5A53D6D25694D35002CB417 /* MyViewController.storyboard in Resources */,
-				B58CB6362564A46500341A80 /* Main.storyboard in Resources */,
+				B58CB6362564A46500341A80 /* MainViewController.storyboard in Resources */,
 				B538958F2567997800B68A41 /* SearchKeywordTableViewCell.xib in Resources */,
 				B5F4884B256910BD00220405 /* CollectionViewController.storyboard in Resources */,
 			);
@@ -563,12 +588,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5F4880B2568B68400220405 /* UIViewExtension.swift in Sources */,
+				B51ACB912588776300893A55 /* MainCoordinator.swift in Sources */,
 				B5F488532569151A00220405 /* CollectionController.swift in Sources */,
-				B58CB6332564A46500341A80 /* ViewController.swift in Sources */,
-				B538956A2567503F00B68A41 /* ViewControllersEnum.swift in Sources */,
+				B58CB6332564A46500341A80 /* MainViewController.swift in Sources */,
 				B538953F2566B01700B68A41 /* PanDirectionGestureRecognizer.swift in Sources */,
 				B5F488292568F42B00220405 /* CollectionItemCollectionViewCell.swift in Sources */,
 				B538959725679A8700B68A41 /* SearchController.swift in Sources */,
+				B51ACB842588772100893A55 /* Storyboarded.swift in Sources */,
 				B53895362566636600B68A41 /* ImageDetailCollectionViewCell.swift in Sources */,
 				B5389583256798AB00B68A41 /* SearchTitleTableViewCell.swift in Sources */,
 				B5F4881F2568F2B900220405 /* CollectionTableViewCell.swift in Sources */,
@@ -583,6 +609,7 @@
 				B53895B325679FEF00B68A41 /* ImageDetailController.swift in Sources */,
 				B538959C25679C0E00B68A41 /* SearchModel.swift in Sources */,
 				B538954F256748BD00B68A41 /* SizeEnum.swift in Sources */,
+				B51ACB8C2588774B00893A55 /* Coordinator.swift in Sources */,
 				B514126C256631BC005205D0 /* ImageLoadOperation.swift in Sources */,
 				B58CB62F2564A46500341A80 /* AppDelegate.swift in Sources */,
 				B53895BB2567AC7700B68A41 /* UserDefaultWrapper.swift in Sources */,
@@ -591,6 +618,7 @@
 				B538957325678A6200B68A41 /* SearchViewController.swift in Sources */,
 				B5F488352569031700220405 /* CollectionModel.swift in Sources */,
 				B51412512566082E005205D0 /* MainController.swift in Sources */,
+				B51ACB9D25887C9600893A55 /* SearchCoordinator.swift in Sources */,
 				B5A34AB125650B62006B5A08 /* APIService.swift in Sources */,
 				B5A34AC925650F2D006B5A08 /* APIRequest.swift in Sources */,
 				B5F48846256910B600220405 /* CollectionViewController.swift in Sources */,
@@ -636,12 +664,12 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		B58CB6342564A46500341A80 /* Main.storyboard */ = {
+		B58CB6342564A46500341A80 /* MainViewController.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				B58CB6352564A46500341A80 /* Base */,
 			);
-			name = Main.storyboard;
+			name = MainViewController.storyboard;
 			sourceTree = "<group>";
 		};
 		B58CB6392564A46700341A80 /* LaunchScreen.storyboard */ = {
