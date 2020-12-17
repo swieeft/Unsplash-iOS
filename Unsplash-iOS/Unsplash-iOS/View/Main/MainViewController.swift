@@ -144,11 +144,6 @@ class MainViewController: UIViewController, Storyboarded {
         
         // 헤더 뷰가 최소 사이즈일 경우에는 검색 뷰컨을 바로 호출하고, 그렇지 않으면 최소 사이즈로 변경 후 검색 뷰컨 호출
         if tableView.contentOffset.y > topOffsetY {
-//            guard let vc = ViewControllersEnum.search.viewController as? SearchViewController else {
-//                return
-//            }
-//
-//            self.present(vc, animated: false, completion: nil)
             coordinator?.showSearch()
         } else {
             searchViewTapCurrentOffset = self.tableView.contentOffset.y
@@ -158,13 +153,6 @@ class MainViewController: UIViewController, Storyboarded {
                 self.view.layoutIfNeeded()
             } completion: { _ in
                 self.coordinator?.showSearch()
-//                guard let vc = ViewControllersEnum.search.viewController as? SearchViewController else {
-//                    return
-//                }
-//
-//                vc.delegate = self
-//
-//                self.present(vc, animated: false, completion: nil)
             }
         }
     }
