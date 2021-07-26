@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ImageProvider: class {
+protocol ImageProvider: AnyObject {
     var photos: PhotosModel? { get set }
     var photoCount: Int { get }
     var imageLoadQueue: OperationQueue { get set }

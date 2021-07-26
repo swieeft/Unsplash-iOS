@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - SearchTitleTableViewCellDelegate
-protocol SearchTitleTableViewCellDelegate: class {
+protocol SearchTitleTableViewCellDelegate: AnyObject {
     func recentClear()
 }
 

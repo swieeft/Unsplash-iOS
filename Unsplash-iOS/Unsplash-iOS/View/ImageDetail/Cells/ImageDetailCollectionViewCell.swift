@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - ImageDetailCollectionViewCellDelegate
-protocol ImageDetailCollectionViewCellDelegate: class {
+protocol ImageDetailCollectionViewCellDelegate: AnyObject {
     func backgroundAlpha(alpha: CGFloat)
     func dismissImageDetail()
 }

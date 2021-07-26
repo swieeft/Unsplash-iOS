@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MainCoordinatorDelegate: class {
+protocol MainCoordinatorDelegate: AnyObject {
     func searchDismiss()
 }
 

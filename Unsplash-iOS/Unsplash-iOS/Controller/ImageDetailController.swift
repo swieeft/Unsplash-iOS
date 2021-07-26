@@ -8,7 +8,7 @@
 import UIKit
 
 // MARK: - ImageDetailControllerDelegate
-protocol ImageDetailControllerDelegate: class {
+protocol ImageDetailControllerDelegate: AnyObject {
     func updatePhotos()
 }
 

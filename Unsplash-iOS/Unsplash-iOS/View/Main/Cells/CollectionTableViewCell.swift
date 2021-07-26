@@ -10,7 +10,7 @@ import UIKit
 // 컬렉션 리스트 셀
 
 // MARK: - CollectionTableViewCellDelegate
-protocol CollectionTableViewCellDelegate: class {
+protocol CollectionTableViewCellDelegate: AnyObject {
     func collectionError(error: String)
     func selectCollection(id: String, title: String)
 }

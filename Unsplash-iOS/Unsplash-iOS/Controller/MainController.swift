@@ -12,7 +12,7 @@
 import UIKit
 
 // MARK: - MainControllerDelegate
-protocol MainControllerDelegate: class {
+protocol MainControllerDelegate: AnyObject {
     func changeHeaderImage(image: UIImage, userName: String)
 }
 
